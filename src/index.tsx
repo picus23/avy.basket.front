@@ -3,13 +3,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './AvyBasket.css';
+import './Avy.css';
 
-import AvyBasket from './AvyBasket';
+import Avy from './Avy';
 import reportWebVitals from './reportWebVitals';
 
-require('bootstrap/js/src/offcanvas');
+import ABClose from "./Basket/Components/Canvas/ButtonClose";
+import ABProduct from "./Basket/Components/Canvas/ProductContent";
+import ABFooter from "./Basket/Components/Canvas/FooterContent";
 
+require('bootstrap/js/src/offcanvas');
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,13 +20,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <button className="btn btn-primary" onClick={() => {
-            console.log('123');
-        }} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBasket"
-                aria-controls="offcanvasBasket">
-            Добавить в корзину
-        </button>
-        <AvyBasket api={'/'} />
+        <Avy />
     </React.StrictMode>
 );
 

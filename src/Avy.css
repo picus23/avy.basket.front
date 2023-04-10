@@ -1,68 +1,4 @@
-p {
-    margin-block-start: 0;
-    margin-block-end: 0;
-}
 
-.offcanvas {
-  width: calc(320px + (100vw - 320px) * (293/ 1600)) !important;
-}
-
-.offcanvas a, p, h5 {
-  margin: 0;
-}
-
-.offcanvas-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.btn-close-basket {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px 12px;
-  gap: 8px;
-
-  width: fit-content;
-  height: 40px;
-  background: #FFFFFF;
-  border: 1px solid #E8E8E8;
-
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  cursor: pointer;
-}
-
-.text-close {
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  text-align: center;
-  color: #1C1C1C;
-}
-
-.product-item {
-  display: flex;
-  width: 100%;
-  padding: 0 24px;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-}
-
-.icon-close {
-  padding: 4px;
-}
 
 .item-link {
   display: flex;
@@ -106,28 +42,6 @@ p {
 .current-count {
   cursor: default;
   border: 0;
-}
-
-.btn-remove,
-.current-count,
-.btn-add {
-  padding: 14px 16px;
-
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  text-align: center;
-  color: #969696;
-}
-
-.btn-to-trash {
-  padding: 14px 16px;
-
-  background: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
 }
 
 .offcanvas-footer {

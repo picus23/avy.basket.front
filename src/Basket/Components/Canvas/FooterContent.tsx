@@ -6,7 +6,7 @@ interface iFooter {
     href?: string,
 }
 
-const Footer: FC<iFooter> = ({full_count, full_price, href}) => {
+const FooterContent: FC<iFooter> = ({full_count, full_price, href}) => {
     return (
         <div className={'footer-basket'}>
             <div className={'basket-price'}>
@@ -24,4 +24,4 @@ const Footer: FC<iFooter> = ({full_count, full_price, href}) => {
     );
 }
 
-export default Footer;
+export default FooterContent;
