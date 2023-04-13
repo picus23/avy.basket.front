@@ -36,7 +36,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
     const [basket, setBasket] = useState(localStorage.getItem('basket'));
 
     useEffect(() => {
-        localStorage.setItem('basket', basket ? basket : '');
+        localStorage.setItem('basket', basket ? basket : '[]');
     }, [basket]);
 
     const toggleAdd = (id: number, count : number) => {
@@ -50,6 +50,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
             ));
         } else {
             let products = JSON.parse(basket);
+
             let find = products.findIndex((p : any) => p.id === id);
 
             if (find != -1) {

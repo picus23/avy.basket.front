@@ -1,7 +1,7 @@
 import React, {FC, useContext} from "react";
-import ABClose from "./Components/Canvas/ButtonClose";
-import ABProduct from "./Components/Canvas/ProductContent";
-import ABFooter from "./Components/Canvas/FooterContent";
+import ButtonClose from "./Components/Canvas/ButtonClose";
+import ProductItem from "./Components/Canvas/ProductItem";
+import FooterContent from "./Components/Canvas/FooterContent";
 import {BasketContext} from "./BasketContext";
 
 interface iCanvas { }
@@ -9,10 +9,10 @@ interface iCanvas { }
 const BasketCanvas : FC<iCanvas> = ({}) => {
     const {getContext} = useContext(BasketContext);
 
-    let mappedBasket = "Записей не найдено.";
+    let mappedItems = "Корзина пуста.";
 
     if (getContext() !== '{}' && getContext() !== null) {
-        mappedBasket = JSON.parse(getContext()).map((b: any) => <ABProduct id={b.id as number} href={'/' + b.id} />);
+        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem id={b.id as number} href={'/' + b.id} />);
     }
 
     return (
@@ -21,13 +21,13 @@ const BasketCanvas : FC<iCanvas> = ({}) => {
                 <div className={'offcanvas-group'}>
                     <div className={'offcanvas-header'}>
                         <h5 className={'offcanvas-title'} id={'offcanvasBasketLabel'}>Ваша корзина</h5>
-                        <ABClose />
+                        <ButtonClose />
                     </div>
                     <div className="offcanvas-body">
-                        {mappedBasket}
+                        {mappedItems}
                     </div>
                     <div className={'offcanvas-footer'}>
-                        <ABFooter />
+                        <FooterContent />
                     </div>
                 </div>
             </div>

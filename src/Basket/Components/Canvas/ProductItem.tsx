@@ -6,14 +6,14 @@ import imgDefault from '../icons/icon-default.svg';
 import {BasketContext} from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 
-interface iProduct {
+interface iProductItem {
     id : number,
     href?: string,
     src?: string,
     pagetitle?: string,
 }
 
-const ProductContent: FC<iProduct> = ({id, href, src, pagetitle}) => {
+const ProductItem: FC<iProductItem> = ({id, href, src, pagetitle}) => {
     const {productPrice} = useContext(BasketContext);
 
     return (
@@ -30,4 +30,4 @@ const ProductContent: FC<iProduct> = ({id, href, src, pagetitle}) => {
     );
 }
 
-export default ProductContent;
+export default ProductItem;

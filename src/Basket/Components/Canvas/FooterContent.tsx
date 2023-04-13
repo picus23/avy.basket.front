@@ -12,7 +12,7 @@ const FooterContent: FC<iFooter> = ({ href}) => {
         <div className={'_b66b70396c42fad9c205e5cf369f8a1e'}>
             <div className={'basket-price'}>
                 <p>Товаров</p>
-                <p>{getProductsCount()}</p>
+                <p>{getProductsCount()} шт.</p>
             </div>
             <div className={'basket-positions'}>
                 <p>Итого</p>

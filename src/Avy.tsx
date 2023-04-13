@@ -9,12 +9,15 @@ import './styles/BasketProductItem.css';
 import './styles/BasketCanvasFooter.css';
 import './styles/BasketOpenButton.css';
 
+import './styles/ShopProductItem.css';
+
 
 import {Basket} from "./Basket/BasketContext";
 import BasketAddButton from "./Basket/BasketAddButton";
 import BasketCanvas from "./Basket/BasketCanvas";
 import BasketOpen from "./Basket/BasketOpen";
 import BasketRemoveButton from "./Basket/BasketRemoveButton";
+import ShopProductItem from "./Basket/ShopProductItem";
 
 const Avy = ({}) => {
 
@@ -57,6 +60,10 @@ const Avy = ({}) => {
                 {/* Кнопка открытия */}
                 <BasketOpen />
                 {/* Кнопка открытия */}
+
+                <div className={'container'}>
+                    <ShopProductItem id={1}/>
+                </div>
             </Basket>
         </>
     );

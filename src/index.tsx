@@ -9,7 +9,7 @@ import Avy from './Avy';
 import reportWebVitals from './reportWebVitals';
 
 import ABClose from "./Basket/Components/Canvas/ButtonClose";
-import ABProduct from "./Basket/Components/Canvas/ProductContent";
+import ABProduct from "./Basket/Components/Canvas/ProductItem";
 import ABFooter from "./Basket/Components/Canvas/FooterContent";
 
 require('bootstrap/js/src/offcanvas');
