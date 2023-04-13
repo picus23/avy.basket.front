@@ -1,0 +1,36 @@
+._b66b70396c42fad9c205e5cf369f8a1e {
+    display: flex;
+    flex-direction: column;
+}
+
+._b66b70396c42fad9c205e5cf369f8a1e div,
+._b66b70396c42fad9c205e5cf369f8a1e a {
+    margin-bottom: 8px;
+}
+
+._b66b70396c42fad9c205e5cf369f8a1e .basket-price,
+._b66b70396c42fad9c205e5cf369f8a1e .basket-positions {
+    display: flex;
+    justify-content: space-between;
+}
+
+._b66b70396c42fad9c205e5cf369f8a1e .btn-order {
+    background: #0085FF;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 2px 1px rgba(0, 0, 0, 0.06), 0px 1px 1px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+._b66b70396c42fad9c205e5cf369f8a1e .btn-basket {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #0085FF;
+}

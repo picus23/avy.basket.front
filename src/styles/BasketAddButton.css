@@ -1,0 +1,23 @@
+._44b9484a4c06d5eecc4f7af9ee29b6c5 {
+    display: flex;
+}
+
+._44b9484a4c06d5eecc4f7af9ee29b6c5 .counter-group {
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+}
+
+._44b9484a4c06d5eecc4f7af9ee29b6c5 .counter-group .btn {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #969696;
+}
+
+._44b9484a4c06d5eecc4f7af9ee29b6c5 .counter-group .btn.btn-count {
+    cursor: default;
+    border: 0;
+}
