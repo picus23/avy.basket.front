@@ -12,7 +12,7 @@ const BasketCanvas : FC<iCanvas> = ({}) => {
     let mappedItems = "Корзина пуста.";
 
     if (getContext() !== '{}' && getContext() !== null) {
-        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem id={b.id as number} href={'/' + b.id} />);
+        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem id={b.id as number} />);
     }
 
     return (

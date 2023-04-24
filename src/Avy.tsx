@@ -8,19 +8,18 @@ import './styles/BasketCloseButton.css';
 import './styles/BasketProductItem.css';
 import './styles/BasketCanvasFooter.css';
 import './styles/BasketOpenButton.css';
-
+import './styles/BasketErase.css';
 import './styles/ShopProductItem.css';
-
 
 import {Basket} from "./Basket/BasketContext";
 import BasketAddButton from "./Basket/BasketAddButton";
 import BasketCanvas from "./Basket/BasketCanvas";
 import BasketOpen from "./Basket/BasketOpen";
 import BasketRemoveButton from "./Basket/BasketRemoveButton";
-import ShopProductItem from "./Basket/ShopProductItem";
+import BasketErase from "./Basket/BasketErase";
+import ShopTable from "./Basket/ShopTable";
 
 const Avy = ({}) => {
-
     return (
         <>
             <Basket>
@@ -61,9 +60,13 @@ const Avy = ({}) => {
                 <BasketOpen />
                 {/* Кнопка открытия */}
 
-                <div className={'container'}>
-                    <ShopProductItem id={1}/>
-                </div>
+                {/* Кнопка отчистить корзину */}
+                <BasketErase />
+                {/* Кнопка отчистить корзину */}
+
+                {/* Продукты на странице "Корзина" */}
+                <ShopTable />
+                {/* Продукты на странице "Корзина" */}
             </Basket>
         </>
     );

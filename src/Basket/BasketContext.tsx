@@ -13,9 +13,12 @@ export interface iBasketContext {
 
     productErase : (id : number) => void,
     productPrice : (id : number) => number,
+    productInfo : (id: number) => any,
 
     getProductsCount: () => number,
     getProductsPrice: () => number,
+
+    eraseAll: () => void,
 }
 
 export const BasketContext = createContext<iBasketContext>({
@@ -27,9 +30,12 @@ export const BasketContext = createContext<iBasketContext>({
 
     productErase(id : number) : void {},
     productPrice(id : number) : any {},
+    productInfo(id : number) : any {},
 
     getProductsCount() : any {},
     getProductsPrice() : any {},
+
+    eraseAll() : void {},
 });
 
 export const Basket : FC<iBasket> = ({ children }) => {
@@ -130,6 +136,26 @@ export const Basket : FC<iBasket> = ({ children }) => {
         }
     }
 
+    const productInfo = async (id: number): Promise<any> => {
+        let bodyS = {
+            id: id
+        }
+
+        let request = await fetch('http://avy-api.loc/', {
+            method: 'POST',
+
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(bodyS),
+        });
+
+        let response = await request.json();
+        console.log(response.message);
+        return response.message;
+    }
+
     const getProductsCount = () : number => {
         if (basket !== null) {
             let products = JSON.parse(basket);
@@ -157,7 +183,11 @@ export const Basket : FC<iBasket> = ({ children }) => {
         }
     }
 
-    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, getProductsCount, getProductsPrice}}>
+    const eraseAll = () : void => {
+        setBasket('[]');
+    }
+
+    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, getProductsCount, getProductsPrice, eraseAll}}>
         {children}
     </BasketContext.Provider>
 }

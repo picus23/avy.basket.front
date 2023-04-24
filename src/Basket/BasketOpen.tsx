@@ -1,6 +1,6 @@
 import {BasketContext} from "./BasketContext";
 import {useContext} from "react";
-import iconCart from "./Components/icons/icon-cart.svg";
+import IconCart from "./Components/icons/icon-cart.svg";
 
 const BasketOpen = ({}) => {
     const {getProductsCount} = useContext(BasketContext);
@@ -11,7 +11,7 @@ const BasketOpen = ({}) => {
                 <button type="button" className="btn position-relative btn-open"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasBasket"
                         aria-controls="offcanvasBasket">
-                    <img className={'icon-basket me-2'} src={iconCart} alt={'BASKET CLOSE'} />
+                    <img className={'icon-basket me-2'} src={IconCart} alt={'BASKET CLOSE'} />
                     <p className={'text-basket'}>Корзина</p>
                     <span className="open-basket-pill position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
                     {getProductsCount()}

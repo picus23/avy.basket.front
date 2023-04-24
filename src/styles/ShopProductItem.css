@@ -39,7 +39,14 @@
     height: 128px;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information {
     display: inherit;
     flex-direction: row;
     align-items: center;
@@ -47,11 +54,11 @@
     width: 100%;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information .product-info {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info {
     align-items: center;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information .product-info .breadcrumbs {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .breadcrumbs {
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -61,20 +68,108 @@
     margin-bottom: 8px;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information .product-info .breadcrumbs a {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .breadcrumbs a {
     text-decoration: none;
     color: #585757;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information .product-info .breadcrumbs a + a:before {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .breadcrumbs a + a:before {
     content: '/';
     margin: 0 8px;
 }
 
-._551de19d3a7b8913067478ec24d67eeb .product-item .item-information .product-info .product-title {
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .product-title {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
+    color: #1C1C1C;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-btn-group {
+    display: inherit;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    column-gap: 24px;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-btn-group .btn-group {
+    display: flex;
+    column-gap: 4px;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-btn-group .btn-group .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-btn-group .btn-group .btn img {
+    display: block;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes {
+    display: flex;
+    justify-content: space-between;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-group {
+    display: flex;
+    width: 84%;
+    overflow-x: auto;
+    column-gap: 64px;
+    margin-right: 1%;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-group .attr-block { }
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-group .attr-block .attr-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #969696;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-group .attr-block .attr-description {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1C1C1C;
+    white-space: nowrap;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-price {
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    row-gap: 4px;
+    width: 15%;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-price .price-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: right;
+    color: #969696;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-attributes .product-attr-price .price-number {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: right;
     color: #1C1C1C;
 }
