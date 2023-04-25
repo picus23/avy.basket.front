@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {FC, useContext} from "react";
+import {FC, useContext, useState} from "react";
 
 import imgDefault from '../icons/icon-default.svg';
 import {BasketContext} from "../../BasketContext";
@@ -11,18 +11,31 @@ interface iProductItem {
 }
 
 const ProductItem: FC<iProductItem> = ({id}) => {
-    const {productPrice, productInfo} = useContext(BasketContext);
+    const {productInfo} = useContext(BasketContext);
+    const [data, setData] = useState({
+        pagetitle: "",
+        price : 0,
+        href : ""
+    });
 
-    let info = productInfo(id);
+    if (data.pagetitle == "") {
+        productInfo(id).then(function (response : any) {
+            return response.json();
+
+        }).then(function (data : {pagetitle : string, price : number, href : string}) {
+            setData(data);
+        });
+    }
 
     return (
-        <div className={'product-item'}>
-            <a className={'item-link'} href={'/'}>
-                <img className={'link-image'} src={imgDefault} alt={'PRODUCT IMAGE'} />
-                <div>
-                    <h5 className={'link-title'}>{info.pagetitle ? info.pagetitle : 'B1V-H-3M'}</h5>
-                    {/*<h5 className={'link-title'}>{'B1V-H-3M'}</h5>*/}
-                    <p className={'link-description'}>{productPrice(id)} $ за шт.</p>
+        <div className={'product-item placeholder-glow'}>
+            <a className={data.href ? 'item-link' : 'item-link placeholder-glow'} href={data.href}>
+                <div className={imgDefault ? 'image' : 'image placeholder'}>
+                    <img className={'link-image'} src={imgDefault} alt={'PRODUCT IMAGE'} />
+                </div>
+                <div className={'link-attr'}>
+                    <h5 className={data.pagetitle ? 'link-title' : 'placeholder link-title'}>{data.pagetitle ? data.pagetitle : 'empty'}</h5>
+                    <p className={data.price ? 'link-description' : 'placeholder link-description'}>{data.price ? data.price : 'empty'} $ за шт.</p>
                 </div>
             </a>
             <BasketRemoveButton id={id} />

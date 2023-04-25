@@ -1,12 +1,10 @@
-import React, {FC, useContext} from "react";
+import React, {useContext} from "react";
 import ButtonClose from "./Components/Canvas/ButtonClose";
 import ProductItem from "./Components/Canvas/ProductItem";
 import FooterContent from "./Components/Canvas/FooterContent";
 import {BasketContext} from "./BasketContext";
 
-interface iCanvas { }
-
-const BasketCanvas : FC<iCanvas> = ({}) => {
+const BasketCanvas = ({}) => {
     const {getContext} = useContext(BasketContext);
 
     let mappedItems = "Корзина пуста.";

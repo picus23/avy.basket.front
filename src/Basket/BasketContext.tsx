@@ -14,6 +14,7 @@ export interface iBasketContext {
     productErase : (id : number) => void,
     productPrice : (id : number) => number,
     productInfo : (id: number) => any,
+    productEnvironment : (id: number) => any,
 
     getProductsCount: () => number,
     getProductsPrice: () => number,
@@ -31,6 +32,7 @@ export const BasketContext = createContext<iBasketContext>({
     productErase(id : number) : void {},
     productPrice(id : number) : any {},
     productInfo(id : number) : any {},
+    productEnvironment(id : number) : any {},
 
     getProductsCount() : any {},
     getProductsPrice() : any {},
@@ -137,23 +139,29 @@ export const Basket : FC<iBasket> = ({ children }) => {
     }
 
     const productInfo = async (id: number): Promise<any> => {
-        let bodyS = {
+        let body = {
             id: id
         }
 
-        let request = await fetch('http://avy-api.loc/', {
+        return await fetch('http://avy-api.loc/', {
             method: 'POST',
-
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(bodyS),
-        });
+            body: JSON.stringify(body),
 
-        let response = await request.json();
-        console.log(response.message);
-        return response.message;
+        });
+    }
+
+    const productEnvironment = async (id: number) : Promise<any> => {
+        return await fetch('http://avy-api.loc/environment', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
     }
 
     const getProductsCount = () : number => {
@@ -187,7 +195,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
         setBasket('[]');
     }
 
-    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, getProductsCount, getProductsPrice, eraseAll}}>
+    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
         {children}
     </BasketContext.Provider>
 }

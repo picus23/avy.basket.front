@@ -11,10 +11,21 @@
     display: flex;
     text-decoration: none;
     align-items: center;
+    column-gap: 16px;
 }
 
-._cad536bb9925258cfbb7480e0a68d883 .offcanvas-group .offcanvas-body .product-item .item-link .link-image {
-    margin-right: 16px;
+
+._cad536bb9925258cfbb7480e0a68d883 .offcanvas-group .offcanvas-body .product-item .item-link .link-attr .placeholder.link-title {
+    width: 80%;
+}
+
+._cad536bb9925258cfbb7480e0a68d883 .offcanvas-group .offcanvas-body .product-item .item-link .link-attr .placeholder.link-description { }
+
+._cad536bb9925258cfbb7480e0a68d883 .offcanvas-group .offcanvas-body .product-item .item-link .image {
+    border-radius: 8px;
+}
+
+._cad536bb9925258cfbb7480e0a68d883 .offcanvas-group .offcanvas-body .product-item .item-link .image .link-image {
     width: 64px;
     height: 64px;
 }

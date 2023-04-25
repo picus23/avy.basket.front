@@ -2,6 +2,7 @@
 
 ._cad536bb9925258cfbb7480e0a68d883 {
     width: calc(320px + (100vw - 320px) * (293/ 1600)) !important;
+    min-width: 492px;
 }
 
 ._cad536bb9925258cfbb7480e0a68d883 p {

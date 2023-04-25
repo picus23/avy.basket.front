@@ -1,4 +1,4 @@
-import React, {FC, useContext} from "react";
+import React, {FC, useContext, useEffect, useState} from "react";
 
 import IconDefault from '../icons/icon-default.svg';
 import ArrowUp from '../icons/icon-arrow-up.svg';
@@ -10,15 +10,42 @@ import IconFeedback from '../icons/icon-feedback.svg';
 
 import {BasketContext} from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
+import {clearInterval} from "timers";
 
 interface iProductItem {
     id : number,
-    position? : number,
-    productTitle? : string
 }
 
-const ShopProductItem : FC<iProductItem> = ({id, position, productTitle}) => {
-    const {productPrice, getCount} = useContext(BasketContext);
+const ShopProductItem : FC<iProductItem> = ({id}) => {
+    const {productPrice, getCount, productInfo, productEnvironment} = useContext(BasketContext);
+
+    const [request, setRequest] = useState(false);
+
+    const [data, setData] = useState({pagetitle : "", price : 0, href : ""});
+    const [environment, setEnvironment] = useState({status : false});
+
+    useEffect(() => {
+        console.log(id, data);
+    }, [data])
+
+
+    if (!request) {
+        setRequest(true);
+
+        productInfo(id).then(function (response : any) {
+            return response.json();
+
+        }).then(function (data : {pagetitle : string, price : number, href : string}) {
+            setData(data);
+        });
+
+        productEnvironment(id).then(function (response : any) {
+            return response.json();
+
+        }).then(function (data : { status : boolean }) {
+            setEnvironment(data);
+        });
+    }
 
     return (
         <>
@@ -27,7 +54,7 @@ const ShopProductItem : FC<iProductItem> = ({id, position, productTitle}) => {
                     <button className={'btn-arrow'}>
                         <img src={ArrowUp} alt={'ARROW UP'} />
                     </button>
-                    <p className={'item-position'}>{position ? position : 1}</p>
+                    <p className={'item-position'}>1</p>
                     <button className={'btn-arrow'}>
                         <img src={ArrowDown} alt={'ARROW DOWN'} />
                     </button>
@@ -44,12 +71,14 @@ const ShopProductItem : FC<iProductItem> = ({id, position, productTitle}) => {
                                     <a href={'/'}>Клапаны</a>
                                     <a href={'/'}>Шаровые краны</a>
                                 </div>
-                                <h2 className={'product-title'}>{productTitle ? productTitle : 'H1B-H-6M'} - {id}</h2>
+                                <h2 className={'product-title'}>{data.pagetitle ? data.pagetitle : 'H1B-H-6M'}</h2>
                             </div>
                             <div className={'product-btn-group'}>
                                 <div className={'btn-group'}>
-                                    <button className={'btn'}>
-                                        <img src={IconEnviroment} alt={''}/>
+                                    <button className={'btn'} onClick={() => {
+                                        console.log(environment);
+                                    }}>
+                                        <img className={environment.status ? 'btn-environment-true' : 'btn-environment-false'} src={IconEnviroment} alt={''}/>
                                     </button>
                                     <button className={'btn'}>
                                         <img src={IconFeedback} alt={''}/>
