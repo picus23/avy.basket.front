@@ -1,16 +1,21 @@
-import React, {useContext} from "react";
+import React, {FC, useContext} from "react";
 import ButtonClose from "./Components/Canvas/ButtonClose";
 import ProductItem from "./Components/Canvas/ProductItem";
 import FooterContent from "./Components/Canvas/FooterContent";
 import {BasketContext} from "./BasketContext";
 
-const BasketCanvas = ({}) => {
+interface iBasketCanvas {
+    getProductInfo (pagetitle : string) : Promise<any>
+    getFullPrice (basket : string) : Promise<any>
+}
+
+const BasketCanvas : FC<iBasketCanvas> = ({getProductInfo, getFullPrice}) => {
     const {getContext} = useContext(BasketContext);
 
     let mappedItems = "Корзина пуста.";
 
     if (getContext() !== '{}' && getContext() !== null) {
-        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem id={b.id as number} />);
+        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem getProductInfo={getProductInfo} pagetitle={b.pagetitle} />);
     }
 
     return (
@@ -25,7 +30,7 @@ const BasketCanvas = ({}) => {
                         {mappedItems}
                     </div>
                     <div className={'offcanvas-footer'}>
-                        <FooterContent />
+                        <FooterContent getFullPrice={getFullPrice} />
                     </div>
                 </div>
             </div>

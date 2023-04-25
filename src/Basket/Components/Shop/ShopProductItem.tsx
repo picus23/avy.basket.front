@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, useContext, useState} from "react";
 
 import IconDefault from '../icons/icon-default.svg';
 import ArrowUp from '../icons/icon-arrow-up.svg';
@@ -12,33 +12,29 @@ import {BasketContext} from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 
 interface iProductItem {
-    id : number,
+    pagetitle : string,
+    getProductInformation (pagetitle : string) : Promise<any>
+    getProductEnvironment (pagetitle : string) : Promise<any>
 }
 
-const ShopProductItem : FC<iProductItem> = ({id}) => {
-    const {productPrice, getCount, productInfo, productEnvironment} = useContext(BasketContext);
+const ShopProductItem : FC<iProductItem> = ({pagetitle, getProductInformation, getProductEnvironment}) => {
+    const {getCount} = useContext(BasketContext);
 
     const [request, setRequest] = useState(false);
-
-    const [data, setData] = useState({pagetitle : "", price : 0, href : ""});
+    const [data, setData] = useState({price : 0, href : ""});
     const [environment, setEnvironment] = useState({status : false});
-
-    useEffect(() => {
-        console.log(id, data);
-    }, [data])
-
 
     if (!request) {
         setRequest(true);
 
-        productInfo(id).then(function (response : any) {
+        getProductInformation(pagetitle).then(function (response : any) {
             return response.json();
 
-        }).then(function (data : {pagetitle : string, price : number, href : string}) {
+        }).then(function (data : {price : number, href : string}) {
             setData(data);
         });
 
-        productEnvironment(id).then(function (response : any) {
+        getProductEnvironment(pagetitle).then(function (response : any) {
             return response.json();
 
         }).then(function (data : { status : boolean }) {
@@ -70,7 +66,7 @@ const ShopProductItem : FC<iProductItem> = ({id}) => {
                                     <a href={'/'}>Клапаны</a>
                                     <a href={'/'}>Шаровые краны</a>
                                 </div>
-                                <h2 className={data.pagetitle ? 'product-title' : 'product-title placeholder'}>{data.pagetitle ? data.pagetitle : 'empty'}</h2>
+                                <h2 className={pagetitle ? 'product-title' : 'product-title placeholder'}>{pagetitle ? pagetitle : 'empty'}</h2>
                             </div>
                             <div className={'product-btn-group'}>
                                 <div className={'btn-group'}>
@@ -91,7 +87,7 @@ const ShopProductItem : FC<iProductItem> = ({id}) => {
                                         <img src={IconPdf} alt={''}/>
                                     </button>
                                 </div>
-                                <BasketRemoveButton id={id} />
+                                <BasketRemoveButton pagetitle={pagetitle} />
                             </div>
                         </div>
                         <div className={'item-attributes'}>
@@ -131,7 +127,7 @@ const ShopProductItem : FC<iProductItem> = ({id}) => {
                             </div>
                             <div className={'product-attr-price'}>
                                 <h5 className={'price-title'}>Итого</h5>
-                                <p className={'price-number'}>${productPrice(id) * getCount(id)}</p>
+                                <p className={'price-number'}>${data.price * getCount(pagetitle)}</p>
                             </div>
                         </div>
                     </div>

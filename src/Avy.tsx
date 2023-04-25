@@ -20,40 +20,81 @@ import BasketErase from "./Basket/BasketErase";
 import ShopTable from "./Basket/ShopTable";
 
 const Avy = ({}) => {
+
+    async function getEnvi (pagetitle : string) : Promise<any> {
+        return await fetch('http://avy-api.loc/environment', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+    }
+
+    async function getInfo (pagetitle : string): Promise<any> {
+        let body = {
+            pagetitle: pagetitle
+        }
+
+        return await fetch('http://avy-api.loc/', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(body),
+        });
+    }
+
+    async function getFPrice (basket : string): Promise<any> {
+        let body = {
+            basket: basket
+        }
+
+        return await fetch('http://avy-api.loc/', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(body),
+        });
+    }
+
     return (
         <>
             <Basket>
                 {/* Кнопки в таблице */}
                 <div className={'d-flex'}>
                     {/* Кнопка добавления */}
-                    <BasketAddButton id={1} />
+                    <BasketAddButton pagetitle={'Продукт 0'} />
                     {/* Кнопка добавления */}
 
                     {/* Кнопка удаления */}
-                    <BasketRemoveButton id={1} />
+                    <BasketRemoveButton pagetitle={'Продукт 0'} />
                     {/* Кнопка удаления */}
                 </div>
                 <div className={'d-flex'}>
                 {/*    /!* Кнопка добавления *!/*/}
-                    <BasketAddButton id={2} />
+                    <BasketAddButton pagetitle={'Продукт 1'} />
                 {/*    /!* Кнопка добавления *!/*/}
 
                 {/*    /!* Кнопка удаления *!/*/}
-                    <BasketRemoveButton id={2} />
+                    <BasketRemoveButton pagetitle={'Продукт 1'} />
                 {/*    /!* Кнопка удаления *!/*/}
                 </div>
-                <BasketAddButton id={3} />
-                <BasketAddButton id={4} />
-                <BasketAddButton id={5} />
-                <BasketAddButton id={6} />
-                <BasketAddButton id={7} />
-                <BasketAddButton id={8} />
-                <BasketAddButton id={9} />
-                <BasketAddButton id={10} />
+                <BasketAddButton pagetitle={'Продукт 2'} />
+                <BasketAddButton pagetitle={'Продукт 3'} />
+                <BasketAddButton pagetitle={'Продукт 4'} />
+                <BasketAddButton pagetitle={'Продукт 5'} />
+                <BasketAddButton pagetitle={'Продукт 6'} />
+                <BasketAddButton pagetitle={'Продукт 7'} />
+                <BasketAddButton pagetitle={'Продукт 8'} />
+                <BasketAddButton pagetitle={'Продукт 9'} />
                 {/* Кнопки в таблице */}
 
                 {/* Корзина списком */}
-                <BasketCanvas />
+                <BasketCanvas getFullPrice={getFPrice} getProductInfo={getInfo} />
                 {/* Корзина списком */}
 
                 {/* Кнопка открытия */}
@@ -65,7 +106,7 @@ const Avy = ({}) => {
                 {/* Кнопка отчистить корзину */}
 
                 {/* Продукты на странице "Корзина" */}
-                <ShopTable />
+                <ShopTable getInfo={getInfo} getEnvi={getEnvi} />
                 {/* Продукты на странице "Корзина" */}
             </Basket>
         </>

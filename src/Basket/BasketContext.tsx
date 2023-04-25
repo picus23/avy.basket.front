@@ -5,37 +5,29 @@ interface iBasket {
 }
 
 export interface iBasketContext {
-    toggleAdd : (id : number, count : number, environment : any) => void,
+    toggleAdd : (pagetitle : string, count : number, environment : any) => void,
     getContext : () => any,
 
-    getCount : (id : number) => any,
-    setCount : (id : number, count : number) => any,
+    getCount : (pagetitle : string) => any,
+    setCount : (pagetitle : string, count : number) => any,
 
-    productErase : (id : number) => void,
-    productPrice : (id : number) => number,
-    productInfo : (id: number) => any,
-    productEnvironment : (id: number) => any,
+    productErase : (pagetitle : string) => void,
 
-    getProductsCount: () => number,
-    getProductsPrice: () => number,
+    getProductsCount :() => number,
 
     eraseAll: () => void,
 }
 
 export const BasketContext = createContext<iBasketContext>({
-    toggleAdd(id : number, count : number): void {},
+    toggleAdd(pagetitle : string, count : number): void {},
     getContext() : any {},
 
-    getCount(id : number) : any {},
-    setCount(id : number, count : number) : any {},
+    getCount(pagetitle : string) : any {},
+    setCount(pagetitle : string, count : number) : any {},
 
-    productErase(id : number) : void {},
-    productPrice(id : number) : any {},
-    productInfo(id : number) : any {},
-    productEnvironment(id : number) : any {},
+    productErase(pagetitle : string) : void {},
 
     getProductsCount() : any {},
-    getProductsPrice() : any {},
 
     eraseAll() : void {},
 });
@@ -47,25 +39,24 @@ export const Basket : FC<iBasket> = ({ children }) => {
         localStorage.setItem('basket', basket ? basket : '[]');
     }, [basket]);
 
-    const toggleAdd = (id: number, count : number) => {
+
+    const toggleAdd = (pagetitle : string, count : number) => {
         if (count == 0) {
             count = 1;
         }
 
         if (basket === null) {
             setBasket(JSON.stringify(
-                new Array({'id' : id, 'count' : count, 'environment' : {'any' : 'any'}})
+                new Array({'pagetitle' : pagetitle, 'count' : count, 'environment' : {'any' : 'any'}})
             ));
         } else {
             let products = JSON.parse(basket);
-
-            let find = products.findIndex((p : any) => p.id === id);
+            let find = products.findIndex((p : any) => p.pagetitle === pagetitle);
 
             if (find != -1) {
-                products[find] = {'id' : id, 'count' : count, 'environment' : {'any' : 'any'}};
-
+                products[find] = {'pagetitle': products[find].pagetitle, 'count': count, 'environment': products[find].environment};
             } else {
-                products.push({'id' : id, 'count' : count, 'environment' : {'any' : 'any'}});
+                products.push({'pagetitle' : pagetitle, 'count' : count, 'environment' : {'any' : 'any'}});
             }
 
             setBasket(JSON.stringify(
@@ -78,12 +69,12 @@ export const Basket : FC<iBasket> = ({ children }) => {
         return basket;
     }
 
-    const getCount = (id: number) : number => {
+    const getCount = (pagetitle : string) : number => {
         if (basket === null) {
             return 0;
         } else {
             let products = JSON.parse(basket);
-            let find = products.findIndex((p : any) => p.id === id);
+            let find = products.findIndex((p : any) => p.pagetitle === pagetitle);
 
             if (find == -1) {
                 return 0;
@@ -93,75 +84,35 @@ export const Basket : FC<iBasket> = ({ children }) => {
         }
     };
 
-    const setCount = (id : number, count : number) : any => {
+    const setCount = (pagetitle : string, count : number) : any => {
         if (basket !== null) {
             let products = JSON.parse(basket);
-            let find = products.findIndex((p : any) => p.id === id);
+            let find = products.findIndex((p : any) => p.pagetitle === pagetitle);
 
             if (find !== -1) {
                 if (count == 0) {
-                    productErase(id);
+                    productErase(pagetitle);
                 } else {
-                    products[find] = {'id' : id, 'count' : count, 'environment' : products[find].environment}
+                    products[find] = {'pagetitle': pagetitle, 'count': count, 'environment': products[find].environment};
+
                     setBasket(JSON.stringify(products));
                 }
             } else {
-                toggleAdd(id, count);
+                toggleAdd(pagetitle, count);
             }
         }
     }
 
-    const productErase = (id : number) : void => {
+    const productErase = (pagetitle : string) : void => {
         if (basket !== null) {
             let products = JSON.parse(basket);
-            let find = products.findIndex((p : any) => p.id === id);
+            let find = products.findIndex((p : any) => p.pagetitle === pagetitle);
 
             if (find !== -1) {
                 products.splice(find, 1);
                 setBasket(JSON.stringify(products));
             }
         }
-    }
-
-    const productPrice = (id : number) : number => {
-        if (id == 1) {
-            return 14;
-        }
-        else if (id == 2) {
-            return 36;
-        }
-        else if (id == 4) {
-            return 111;
-        }
-        else {
-            return 156;
-        }
-    }
-
-    const productInfo = async (id: number): Promise<any> => {
-        let body = {
-            id: id
-        }
-
-        return await fetch('http://avy-api.loc/', {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(body),
-
-        });
-    }
-
-    const productEnvironment = async (id: number) : Promise<any> => {
-        return await fetch('http://avy-api.loc/environment', {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
     }
 
     const getProductsCount = () : number => {
@@ -175,27 +126,11 @@ export const Basket : FC<iBasket> = ({ children }) => {
         }
     }
 
-    const getProductsPrice = () : number => {
-        if (basket !== null) {
-            let fullPrice = 0;
-            let products = JSON.parse(basket);
-
-            for (let i = 0; i < products.length; i++) {
-                fullPrice += productPrice(products[i].id) * products[i].count;
-            }
-
-            return fullPrice;
-
-        } else {
-            return 0;
-        }
-    }
-
     const eraseAll = () : void => {
         setBasket('[]');
     }
 
-    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
+    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, getProductsCount, eraseAll}}>
         {children}
     </BasketContext.Provider>
 }

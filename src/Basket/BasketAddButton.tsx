@@ -6,11 +6,11 @@ import imgAdd from "./Components/icons/icon-add.svg";
 import iconCart from './Components/icons/icon-cart.svg';
 
 interface iAddButton {
-    id : number,
+    pagetitle : string,
     environment? : any
 }
 
-const BasketAddButton : FC<iAddButton> = ({id, environment}) => {
+const BasketAddButton : FC<iAddButton> = ({pagetitle, environment}) => {
     const {toggleAdd, getCount, setCount} = useContext(BasketContext) as iBasketContext;
 
     return (
@@ -19,17 +19,17 @@ const BasketAddButton : FC<iAddButton> = ({id, environment}) => {
                 <div className={'counter-group me-2'}>
                     <button className={'btn'} onClick={
                         () => {
-                            if (getCount(id) - 1 >= 0) {
-                                setCount(id, getCount(id) - 1);
+                            if (getCount(pagetitle) - 1 >= 0) {
+                                setCount(pagetitle, getCount(pagetitle) - 1);
                             }
                         }
                     }>
                         <img src={imgRemove} alt={'REMOVE'}/>
                     </button>
-                    <button className={'btn btn-count'} disabled={true}>{getCount(id)}</button>
+                    <button className={'btn btn-count'} disabled={true}>{getCount(pagetitle)}</button>
                     <button className={'btn'} onClick={
                         () => {
-                            setCount(id, getCount(id) + 1);
+                            setCount(pagetitle, getCount(pagetitle) + 1);
                         }
                     }>
                         <img src={imgAdd} alt={'ADD'}/>
@@ -37,7 +37,7 @@ const BasketAddButton : FC<iAddButton> = ({id, environment}) => {
                 </div>
                 <button type={'button'} className={'btn btn-primary'} data-bs-toggle="offcanvas" data-bs-target="#offcanvasBasket" aria-controls="offcanvasBasket"
                         onClick={() => {
-                            toggleAdd(id, getCount(id), environment);
+                            toggleAdd(pagetitle, getCount(pagetitle), environment);
                         }
                     }>
                     <img src={iconCart} alt={'ADD'}/>
