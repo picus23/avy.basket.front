@@ -68,6 +68,12 @@
     margin-bottom: 8px;
 }
 
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .breadcrumbs.placeholder {
+    min-width: 200px;
+    width: 100%;
+    height: 16px;
+}
+
 ._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .breadcrumbs a {
     text-decoration: none;
     color: #585757;
@@ -84,6 +90,11 @@
     font-size: 20px;
     line-height: 28px;
     color: #1C1C1C;
+}
+
+._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-info .product-title.placeholder {
+    width: 75%;
+    min-width: 175px;
 }
 
 ._551de19d3a7b8913067478ec24d67eeb .product-item .product-rows .item-information .product-btn-group {

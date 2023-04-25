@@ -10,7 +10,6 @@ import IconFeedback from '../icons/icon-feedback.svg';
 
 import {BasketContext} from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
-import {clearInterval} from "timers";
 
 interface iProductItem {
     id : number,
@@ -65,13 +64,13 @@ const ShopProductItem : FC<iProductItem> = ({id}) => {
                     </div>
                     <div className={'product-rows'}>
                         <div className={'item-information'}>
-                            <div className={'product-info'}>
-                                <div className={'breadcrumbs'}>
+                            <div className={'product-info placeholder-glow'}>
+                                <div className={data.href ? 'breadcrumbs' : 'breadcrumbs placeholder'}>
                                     <a href={'/'}>Продукция</a>
                                     <a href={'/'}>Клапаны</a>
                                     <a href={'/'}>Шаровые краны</a>
                                 </div>
-                                <h2 className={'product-title'}>{data.pagetitle ? data.pagetitle : 'H1B-H-6M'}</h2>
+                                <h2 className={data.pagetitle ? 'product-title' : 'product-title placeholder'}>{data.pagetitle ? data.pagetitle : 'empty'}</h2>
                             </div>
                             <div className={'product-btn-group'}>
                                 <div className={'btn-group'}>
