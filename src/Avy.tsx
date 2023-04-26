@@ -19,9 +19,15 @@ import BasketRemoveButton from "./Basket/BasketRemoveButton";
 import BasketErase from "./Basket/BasketErase";
 import ShopTable from "./Basket/ShopTable";
 
+
+import Button from "kit/components/buttons/Button"
+
+
 const Avy = ({ }) => {
     return (
         <>
+            <Button type="primary">112323</Button>
+
             <Basket>
                 <div>
                     {/* Кнопки в таблице */}
