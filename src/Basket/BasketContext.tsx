@@ -8,7 +8,7 @@ interface iBasket {
 export interface iBasketContext {
     isOpenDrawer: boolean,
     closeDrawer(): void ,
-    openDriver(): void ,
+    openDrawer(): void ,
     toggleAdd : (id : number, count : number, environment : any) => void,
     getContext : () => any,
 
@@ -29,7 +29,7 @@ export interface iBasketContext {
 export const BasketContext = createContext<iBasketContext>({
     isOpenDrawer: false,
     closeDrawer(): void {},
-    openDriver() : void {},
+    openDrawer() : void {},
     toggleAdd(id : number, count : number): void {},
     getContext() : any {},
 
@@ -62,7 +62,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
         setIsOpenDrawer(false)
     }
 
-    const openDriver = () => {
+    const openDrawer = () => {
         setIsOpenDrawer(true)
     }
 
@@ -218,7 +218,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
         setBasket('[]');
     }
 
-    return <BasketContext.Provider value={{isOpenDrawer, closeDrawer, openDriver ,toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
+    return <BasketContext.Provider value={{isOpenDrawer, closeDrawer, openDrawer ,toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
         <BasketCanvas>{children}</BasketCanvas>
     </BasketContext.Provider>
 }
