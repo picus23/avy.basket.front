@@ -1,4 +1,5 @@
 import {createContext, FC, ReactNode, useEffect, useState} from "react";
+import BasketCanvas from "./BasketCanvas";
 
 interface iBasket {
     children: ReactNode,
@@ -47,8 +48,15 @@ export const BasketContext = createContext<iBasketContext>({
 });
 
 export const Basket : FC<iBasket> = ({ children }) => {
-    const [basket, setBasket] = useState(localStorage.getItem('basket'));
+    const defaultBasket = '[]'
+    const [basket, setBasket] = useState(defaultBasket);
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+
+
+    useEffect(() => {
+        setBasket(localStorage.getItem('basket') ?? defaultBasket)
+    }, [])
+
 
     const closeDrawer = () => {
         setIsOpenDrawer(false)
@@ -211,6 +219,6 @@ export const Basket : FC<iBasket> = ({ children }) => {
     }
 
     return <BasketContext.Provider value={{isOpenDrawer, closeDrawer, openDriver ,toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
-        {children}
+        <BasketCanvas>{children}</BasketCanvas>
     </BasketContext.Provider>
 }

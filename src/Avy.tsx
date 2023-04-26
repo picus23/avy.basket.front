@@ -14,12 +14,10 @@ import 'kit/styles/style.css';
 
 import { Basket } from "./Basket/BasketContext";
 import BasketAddButton from "./Basket/BasketAddButton";
-import BasketCanvas from "./Basket/BasketCanvas";
 import BasketOpen from "./Basket/BasketOpen";
 import BasketRemoveButton from "./Basket/BasketRemoveButton";
 import BasketErase from "./Basket/BasketErase";
 import ShopTable from "./Basket/ShopTable";
-
 
 
 const Avy = ({ }) => {
@@ -61,9 +59,7 @@ const Avy = ({ }) => {
                 </div>
                 {/* Кнопки в таблице */}
 
-                {/* Корзина списком */}
-                <BasketCanvas />
-                {/* Корзина списком */}
+               
 
                 {/* Кнопка открытия */}
                 <div className='mb-4' style={{ width: '147px' }}>
@@ -84,6 +80,5 @@ const Avy = ({ }) => {
 }
 
 export default Avy;
-
 
 
