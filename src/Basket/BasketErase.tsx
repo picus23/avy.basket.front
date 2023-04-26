@@ -1,17 +1,29 @@
-import {BasketContext} from "./BasketContext";
-import {useContext} from "react";
-import IconTrash from "./Components/icons/icon-trash.svg";
+import { BasketContext } from "./BasketContext";
+import { useContext } from "react";
+import { MdDelete } from "react-icons/md";
+import Button from "./Button";
 
-const BasketErase = ({}) => {
-    const {eraseAll} = useContext(BasketContext);
+
+
+const BasketErase = ({ }) => {
+    const { eraseAll } = useContext(BasketContext);
 
     return (
         <>
             <div className={'_9eeb113047fbcf779b6f3323e368aadb'}>
-                <button type="button" className="btn btn-erase" onClick={() => {eraseAll()}}>
-                    <img className={'icon-basket me-2'} src={IconTrash} alt={'BASKET CLOSE'} />
+
+                <Button
+                    icon={<MdDelete size={24} fill={'gray'} />}
+                    btn_style={"gray"}
+                    onClick={() => { eraseAll() }}
+                >
+                    <span className="fw-500">Очистить корзину</span>
+                </Button>
+
+                {/* <button type="button" className="btn btn-erase" onClick={() => { eraseAll() }}>
+                    <MdDelete fill="#969696" />
                     <p className={'text-basket'}>Очистить корзину</p>
-                </button>
+                </button> */}
             </div>
         </>
     );

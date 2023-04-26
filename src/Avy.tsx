@@ -20,13 +20,10 @@ import BasketErase from "./Basket/BasketErase";
 import ShopTable from "./Basket/ShopTable";
 
 
-import Button from "kit/components/buttons/Button"
-
 
 const Avy = ({ }) => {
     return (
         <>
-            <Button type="primary">112323</Button>
 
             <Basket>
                 <div>
@@ -49,7 +46,7 @@ const Avy = ({ }) => {
                         <BasketRemoveButton id={2} />
                         {/*    /!* Кнопка удаления *!/*/}
                     </div>
-                    <div style={{width:'147px'}}>
+                    <div className='mb-4' style={{ width: '147px' }}>
                         <BasketAddButton id={3} />
                         <BasketAddButton id={4} />
                         <BasketAddButton id={5} />
@@ -68,7 +65,9 @@ const Avy = ({ }) => {
                 {/* Корзина списком */}
 
                 {/* Кнопка открытия */}
-                <BasketOpen />
+                <div className='mb-4' style={{ width: '147px' }}>
+                    <BasketOpen />
+                </div>
                 {/* Кнопка открытия */}
 
                 {/* Кнопка отчистить корзину */}
