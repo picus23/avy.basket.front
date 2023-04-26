@@ -1,24 +1,9 @@
-import React from 'react';
-// import './Avy.css';
-
-// import './styles/BasketAddButton.css';
-// import './styles/BasketRemoveButton.css';
-// import './styles/BasketCanvas.css';
-// import './styles/BasketCloseButton.css';
-// import './styles/BasketProductItem.css';
-// import './styles/BasketCanvasFooter.css';
-// import './styles/BasketOpenButton.css';
-// import './styles/BasketErase.css';
-// import './styles/ShopProductItem.css';
-
 import { Basket } from "./Basket/BasketContext";
 import BasketAddButton from "./Basket/BasketAddButton";
-import BasketCanvas from "./Basket/BasketCanvas";
 import BasketOpen from "./Basket/BasketOpen";
 import BasketRemoveButton from "./Basket/BasketRemoveButton";
 import BasketErase from "./Basket/BasketErase";
 import ShopTable from "./Basket/ShopTable";
-
 
 
 const Avy = ({ }) => {

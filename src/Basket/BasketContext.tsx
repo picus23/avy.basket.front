@@ -42,6 +42,9 @@ export const BasketContext = createContext<iBasketContext>({
 
 export const Basket : FC<iBasket> = ({ children }) => {
     const [basket, setBasket] = useState(localStorage.getItem('basket'));
+    
+
+
 
     useEffect(() => {
         localStorage.setItem('basket', basket ? basket : '[]');
