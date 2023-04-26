@@ -11,36 +11,17 @@ import IconFeedback from '../icons/icon-feedback.svg';
 import {BasketContext} from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 
+
 interface iProductItem {
     pagetitle : string,
-    getProductInformation (pagetitle : string) : Promise<any>
-    getProductEnvironment (pagetitle : string) : Promise<any>
+    price : number,
+    href : string,
 }
 
-const ShopProductItem : FC<iProductItem> = ({pagetitle, getProductInformation, getProductEnvironment}) => {
+const ShopProductItem : FC<iProductItem> = ({pagetitle, price, href}) => {
     const {getCount} = useContext(BasketContext);
-
-    const [request, setRequest] = useState(false);
-    const [data, setData] = useState({price : 0, href : ""});
     const [environment, setEnvironment] = useState({status : false});
 
-    if (!request) {
-        setRequest(true);
-
-        getProductInformation(pagetitle).then(function (response : any) {
-            return response.json();
-
-        }).then(function (data : {price : number, href : string}) {
-            setData(data);
-        });
-
-        getProductEnvironment(pagetitle).then(function (response : any) {
-            return response.json();
-
-        }).then(function (data : { status : boolean }) {
-            setEnvironment(data);
-        });
-    }
 
     return (
         <>
@@ -61,7 +42,7 @@ const ShopProductItem : FC<iProductItem> = ({pagetitle, getProductInformation, g
                     <div className={'product-rows'}>
                         <div className={'item-information'}>
                             <div className={'product-info placeholder-glow'}>
-                                <div className={data.href ? 'breadcrumbs' : 'breadcrumbs placeholder'}>
+                                <div className={href ? 'breadcrumbs' : 'breadcrumbs placeholder'}>
                                     <a href={'/'}>Продукция</a>
                                     <a href={'/'}>Клапаны</a>
                                     <a href={'/'}>Шаровые краны</a>
@@ -127,7 +108,7 @@ const ShopProductItem : FC<iProductItem> = ({pagetitle, getProductInformation, g
                             </div>
                             <div className={'product-attr-price'}>
                                 <h5 className={'price-title'}>Итого</h5>
-                                <p className={'price-number'}>${data.price * getCount(pagetitle)}</p>
+                                <p className={'price-number'}>${price * getCount(pagetitle)}</p>
                             </div>
                         </div>
                     </div>

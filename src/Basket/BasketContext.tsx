@@ -37,6 +37,8 @@ export const Basket : FC<iBasket> = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('basket', basket ? basket : '[]');
+
+        console.log(basket);
     }, [basket]);
 
 
@@ -100,6 +102,8 @@ export const Basket : FC<iBasket> = ({ children }) => {
             } else {
                 toggleAdd(pagetitle, count);
             }
+        } else {
+            toggleAdd(pagetitle, count);
         }
     }
 

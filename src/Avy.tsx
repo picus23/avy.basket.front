@@ -31,22 +31,7 @@ const Avy = ({}) => {
         });
     }
 
-    async function getInfo (pagetitle : string): Promise<any> {
-        let body = {
-            pagetitle: pagetitle
-        }
-
-        return await fetch('http://avy-api.loc/', {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(body),
-        });
-    }
-
-    async function getFPrice (basket : string): Promise<any> {
+    async function getInfo<T> (basket : any): Promise<T> {
         let body = {
             basket: basket
         }
@@ -58,7 +43,7 @@ const Avy = ({}) => {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: JSON.stringify(body),
-        });
+        }).then(a => a.json());
     }
 
     return (
@@ -94,7 +79,7 @@ const Avy = ({}) => {
                 {/* Кнопки в таблице */}
 
                 {/* Корзина списком */}
-                <BasketCanvas getFullPrice={getFPrice} getProductInfo={getInfo} />
+                <BasketCanvas getProductsInfo={getInfo} />
                 {/* Корзина списком */}
 
                 {/* Кнопка открытия */}
@@ -106,7 +91,7 @@ const Avy = ({}) => {
                 {/* Кнопка отчистить корзину */}
 
                 {/* Продукты на странице "Корзина" */}
-                <ShopTable getInfo={getInfo} getEnvi={getEnvi} />
+                <ShopTable getProductsInfo={getInfo} getEnvi={getEnvi} />
                 {/* Продукты на странице "Корзина" */}
             </Basket>
         </>

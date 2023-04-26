@@ -1,21 +1,49 @@
-import React, {FC, useContext} from "react";
+import React, {FC, useContext, useEffect, useState} from "react";
 import ButtonClose from "./Components/Canvas/ButtonClose";
 import ProductItem from "./Components/Canvas/ProductItem";
 import FooterContent from "./Components/Canvas/FooterContent";
 import {BasketContext} from "./BasketContext";
 
-interface iBasketCanvas {
-    getProductInfo (pagetitle : string) : Promise<any>
-    getFullPrice (basket : string) : Promise<any>
+interface iPromiseResponse {
+    attachments : [
+        {
+            pagetitle : string
+            price : number
+            href : string
+        },
+    ]
+    full_price : number
 }
 
-const BasketCanvas : FC<iBasketCanvas> = ({getProductInfo, getFullPrice}) => {
+interface iBasketCanvas {
+    getProductsInfo (basket : any) : Promise<any>
+}
+
+const BasketCanvas : FC<iBasketCanvas> = ({getProductsInfo}) => {
     const {getContext} = useContext(BasketContext);
 
-    let mappedItems = "Корзина пуста.";
+    useEffect(() => {
+        setUpdateProducts(true);
+    }, [getContext]);
+
+    const [updateProducts, setUpdateProducts] = useState(true);
+
+    const [products, setProducts] = useState<Array<{pagetitle : string, price : number, href : string}>>([]);
+    const [fullPrice, setFullPrice] = useState(0);
+
+    if (updateProducts) {
+        setUpdateProducts(false);
+
+        getProductsInfo(getContext() as string).then(function (data : iPromiseResponse) {
+            setProducts(data.attachments);
+            setFullPrice(data.full_price);
+        })
+    }
+
+    let mappedItems: JSX.Element[] = [];
 
     if (getContext() !== '{}' && getContext() !== null) {
-        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem getProductInfo={getProductInfo} pagetitle={b.pagetitle} />);
+        mappedItems = products.map((b: any) => <ProductItem pagetitle={b.pagetitle} price={b.price as number} href={b.href} />);
     }
 
     return (
@@ -30,7 +58,7 @@ const BasketCanvas : FC<iBasketCanvas> = ({getProductInfo, getFullPrice}) => {
                         {mappedItems}
                     </div>
                     <div className={'offcanvas-footer'}>
-                        <FooterContent getFullPrice={getFullPrice} />
+                        <FooterContent fullPrice={fullPrice}  />
                     </div>
                 </div>
             </div>
