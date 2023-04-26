@@ -1,5 +1,6 @@
 import React from 'react';
 // import './Avy.css';
+import 'kit/styles/style.css';
 
 // import './styles/BasketAddButton.css';
 // import './styles/BasketRemoveButton.css';
@@ -61,7 +62,7 @@ const Avy = ({ }) => {
                 {/* Кнопки в таблице */}
 
                 {/* Корзина списком */}
-                {/* <BasketCanvas /> */}
+                <BasketCanvas />
                 {/* Корзина списком */}
 
                 {/* Кнопка открытия */}

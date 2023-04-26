@@ -10,11 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "antd": "^5.4.5",
     "bootstrap": "^5.2.3",
-    "kit": "git://github.com:picus23/any-web-components.git"
+    "kit": "git://github.com:picus23/any-web-components.git",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

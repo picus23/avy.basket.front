@@ -5,6 +5,9 @@ interface iBasket {
 }
 
 export interface iBasketContext {
+    isOpenDrawer: boolean,
+    closeDrawer(): void ,
+    openDriver(): void ,
     toggleAdd : (id : number, count : number, environment : any) => void,
     getContext : () => any,
 
@@ -23,6 +26,9 @@ export interface iBasketContext {
 }
 
 export const BasketContext = createContext<iBasketContext>({
+    isOpenDrawer: false,
+    closeDrawer(): void {},
+    openDriver() : void {},
     toggleAdd(id : number, count : number): void {},
     getContext() : any {},
 
@@ -42,6 +48,15 @@ export const BasketContext = createContext<iBasketContext>({
 
 export const Basket : FC<iBasket> = ({ children }) => {
     const [basket, setBasket] = useState(localStorage.getItem('basket'));
+    const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+
+    const closeDrawer = () => {
+        setIsOpenDrawer(false)
+    }
+
+    const openDriver = () => {
+        setIsOpenDrawer(true)
+    }
 
     useEffect(() => {
         localStorage.setItem('basket', basket ? basket : '[]');
@@ -195,7 +210,7 @@ export const Basket : FC<iBasket> = ({ children }) => {
         setBasket('[]');
     }
 
-    return <BasketContext.Provider value={{toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
+    return <BasketContext.Provider value={{isOpenDrawer, closeDrawer, openDriver ,toggleAdd, getContext, getCount, setCount, productErase, productPrice, productInfo, productEnvironment, getProductsCount, getProductsPrice, eraseAll}}>
         {children}
     </BasketContext.Provider>
 }
