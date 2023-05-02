@@ -10,13 +10,7 @@ interface BasketCanvasProps {
 }
 
 const BasketCanvas : FC<BasketCanvasProps> = () => {
-    const { getContext, isOpenDrawer, closeDrawer} = useContext(BasketContext);
-
-    let mappedItems = "Корзина пуста.";
-
-    if (getContext() !== '{}' && getContext() !== null) {
-        mappedItems = JSON.parse(getContext()).map((b: any) => <ProductItem id={b.id as number} />);
-    }
+    const { basketList, basketListCount, isOpenDrawer, closeDrawer} = useContext(BasketContext);
 
     return (
 
@@ -28,7 +22,17 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
                         <ButtonClose onClick={closeDrawer} />
                     </div>
                     <div className="offcanvas-body">
-                        {mappedItems}
+                        {
+
+                            basketListCount
+                                ? Object.values(basketList).map(basketItem => {
+                                    return <div>
+                                        <ProductItem pagetitle={basketItem.pagetitle} />
+                                    </div>
+                                })
+                                : "Корзина пуста."
+
+                        }
                     </div>
                     <div className={'offcanvas-footer'}>
                         <FooterContent />

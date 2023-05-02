@@ -1,60 +1,22 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react"
 import BasketCanvas from "./BasketCanvas"
 import { EnvStorage } from "./environment/Interfaces";
-import {IBreadСrumbs} from 'kit/components/breadСrumbs/interface'
+import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
 
 
 
 
-export interface iBasketContext {
-    isOpenDrawer: boolean,
-    closeDrawer(): void,
-    openDrawer(): void,
-    toggleAdd: (pagetitle: string, count: number, environment: any) => void,
-    getContext: () => any,
-
-    getCount: (pagetitle: string) => any,
-    setCount: (pagetitle: string, count: number) => any,
-
-    productErase: (pagetitle: string) => void,
-    productPrice: (pagetitle: string) => number,
-    productInfo: (pagetitle: string) => any,
-    productEnvironment: (pagetitle: string) => any,
-
-    getProductsCount: () => number,
-    getProductsPrice: () => number,
-
-    eraseAll: () => void,
+interface BasketItem {
+    pagetitle: string,
+    count: number,
+    environment: EnvStorage,
 }
 
-export const BasketContext = createContext<iBasketContext>({
-    isOpenDrawer: false,
-    closeDrawer(): void { },
-    openDrawer(): void { },
-    toggleAdd(pagetitle: string, count: number): void { },
-    getContext(): any { },
-
-    getCount(pagetitle: string): any { },
-    setCount(pagetitle: string, count: number): any { },
-
-    productErase(pagetitle: string): void { },
-    productPrice(pagetitle: string): any { },
-    productInfo(pagetitle: string): any { },
-    productEnvironment(pagetitle: string): any { },
-
-    getProductsCount(): any { },
-    getProductsPrice(): any { },
-
-    eraseAll(): void { },
-});
-
-
-
-interface IDetailBasketItem {
+interface DetailBaketItem {
     pagetitle: string,
     count: number,
     price: number,
-    
+
     environment: EnvStorage,
     compatibilityStatus: number,
     imageUrl: string,
@@ -66,26 +28,61 @@ interface IDetailBasketItem {
 
 
 
+interface BasketItems {
+    [pagetitle: string]: BasketItem,
+}
+
+export interface DetailBaketItems {
+    [pagetitle: string]: DetailBaketItem,
+}
+
+
+export interface iBasketContext {
+    basketList?: BasketItems,
+    detailBasketList?: DetailBaketItems,
+    basketListCount?: number,
+
+    isOpenDrawer?: boolean,
+    closeDrawer?: () => void,
+    openDrawer?: () => void,
+    toggleAdd?: (pagetitle: string, count: number, openDrawer?: boolean) => void,
+
+    getCount?: (pagetitle: string) => number,
+    setCount?: (pagetitle: string, count: number) => void,
+
+    productErase?: (pagetitle: string) => void,
+    productPrice?: (pagetitle: string) => number,
+    getProductsPrice?: () => number,
+    eraseAll?: () => void,
+}
+
+export const BasketContext = createContext<iBasketContext>({});
+
 
 interface iBasket {
     children: ReactNode,
     getEnvironment: () => EnvStorage,
-    runTask: () => Promise
+    runTask: (task: string, props: {}) => Promise
 }
 
 
 export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
-    const defaultBasket = '[]'
-    const [basket, setBasket] = useState(defaultBasket);
+
+    const [basketList, setBasketList] = useState<BasketItems>({});
+    const [detailBasketList, setDetailBasketList] = useState<DetailBaketItems>({})
+    const [basketListCount, setBasketListCount] = useState(0)
+
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
 
 
-    const [detailBasket, setDetailBasket] = useState<IDetailBasketItem[]>([])
-
 
     useEffect(() => {
-        console.log('My basket', localStorage.getItem('basket'))
-        setBasket(localStorage.getItem('basket') ?? defaultBasket)
+        try {
+            const tempBasket = JSON.parse(localStorage.getItem('basket') as string)
+            setBasketList(tempBasket)
+        } catch (error) {
+            console.error('Не получилось загрузить данные для корзины')
+        }
     }, [])
 
 
@@ -97,89 +94,77 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
         setIsOpenDrawer(true)
     }
 
+
+    const loadDetailBasket = () => {
+        runTask('getDetailBasket', { basket: Object.values(basketList) }).then((detailsBasketList: DetailBaketItems) => {
+            setDetailBasketList(detailsBasketList)
+        })
+    }
+
+
     useEffect(() => {
-        localStorage.setItem('basket', basket ? basket : '[]');
-        console.log('basket', basket)
-    }, [basket]);
+        localStorage.setItem('basket', JSON.stringify(basketList));
+        setBasketListCount(Object.keys(basketList).length)
+    }, [basketList]);
 
 
-    const toggleAdd = (pagetitle: string, count: number) => {
+    useEffect(() => {
+        if (basketListCount)
+            loadDetailBasket()
+        else
+            setDetailBasketList({})
+    }, [basketListCount])
+
+
+
+
+    const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
         const environment = getEnvironment()
 
-        if (count == 0) {
-            count = 1;
-        }
+        if (count < 1) count = 1;
 
-        if (basket === null) {
-            setBasket(JSON.stringify(
-                new Array({ pagetitle, count, environment  })
-            ));
+        const tempBasketList = { ...basketList }
+        tempBasketList[pagetitle] = { pagetitle, count, environment }
+
+        setBasketList(tempBasketList)
+        if (openDrawer)
+            setIsOpenDrawer(true)
+    }
+
+
+
+
+    const getCount = (pagetitle: string) => {
+        if (pagetitle in basketList) {
+            return basketList[pagetitle].count
         } else {
-            let products = JSON.parse(basket);
-
-            let find = products.findIndex((p: any) => p.pagetitle === pagetitle);
-
-            if (find != -1) {
-                products[find] = { pagetitle, count, environment  };
-
-            } else {
-                products.push({ pagetitle, count, environment  });
-            }
-
-            setBasket(JSON.stringify(
-                products
-            ));
+            return 0
         }
     }
 
-    const getContext = () => {
-        return basket;
-    }
+    const setCount = (pagetitle: string, count: number) => {
+        if (pagetitle in basketList) {
+            if (count < 1) {
+                productErase(pagetitle)
+            } else {
+                const tempBasketList = { ...basketList }
+                tempBasketList[pagetitle].count = count
 
-    const getCount = (pagetitle: string): number => {
-        if (basket === null) {
-            return 0;
+                setBasketList(tempBasketList)
+            }
         } else {
-            let products = JSON.parse(basket);
-            let find = products.findIndex((p: any) => p.pagetitle === pagetitle);
-
-            if (find == -1) {
-                return 0;
-            } else {
-                return products[find].count
-            }
-        }
-    };
-
-
-
-    const setCount = (pagetitle: string, count: number): any => {
-        if (basket !== null) {
-            let products = JSON.parse(basket);
-            let find = products.findIndex((p: any) => p.pagetitle === pagetitle);
-
-            if (find !== -1) {
-                if (count == 0) {
-                    productErase(pagetitle);
-                } else {
-                    products[find] = { pagetitle, count, 'environment': getEnvironment() }
-                    setBasket(JSON.stringify(products));
-                }
-            } else {
-                toggleAdd(pagetitle, count);
-            }
+            toggleAdd(pagetitle, count, false)
         }
     }
+
 
     const productErase = (pagetitle: string): void => {
-        if (basket !== null) {
-            let products = JSON.parse(basket);
-            let find = products.findIndex((p: any) => p.pagetitle === pagetitle);
+        if (pagetitle in basketList) {
 
-            if (find !== -1) {
-                products.splice(find, 1);
-                setBasket(JSON.stringify(products));
-            }
+            const tempBasketList = { ...basketList }
+            delete tempBasketList[pagetitle]
+
+            setBasketList(tempBasketList)
         }
     }
 
@@ -187,83 +172,42 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
         return 10
     }
 
-    const productInfo = async (pagetitle: string): Promise<any> => {
-        // let body = {
-        //     id: id
-        // }
 
-        // return await fetch('http://avy-api.loc/', {
-        //     method: 'POST',
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //     },
-        //     body: JSON.stringify(body),
-
-        // });
-        return runTask<any>('basketInfo', {pagetitle})
-    }
-
-    const productEnvironment = async (pagetitle: string): Promise<any> => {
-        return await fetch('http://avy-api.loc/environment', {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
-    }
-
-    const getProductsCount = (): number => {
-        if (basket !== null) {
-            let products = JSON.parse(basket);
-
-            return products.length;
-
-        } else {
-            return 0;
-        }
-    }
 
     const getProductsPrice = (): number => {
-        if (basket !== null) {
-            let fullPrice = 0;
-            let products = JSON.parse(basket);
+        let price = 0
+        Object.values(detailBasketList).forEach(detailBasketItem => {
+            price += detailBasketItem.price
+        })
 
-            for (let i = 0; i < products.length; i++) {
-                fullPrice += productPrice(products[i].id) * products[i].count;
-            }
-
-            return fullPrice;
-
-        } else {
-            return 0;
-        }
+        return price
     }
 
     const eraseAll = (): void => {
-        setBasket('[]');
+        setBasketList({})
     }
 
     return <BasketContext.Provider value={
         {
+            basketList,
+            detailBasketList,
+            basketListCount,
+
             isOpenDrawer,
             closeDrawer,
             openDrawer,
             toggleAdd,
-            getContext,
-            getCount,
+
             setCount,
+            getCount,
+
             productErase,
             productPrice,
-            productInfo,
-            productEnvironment,
-            getProductsCount,
             getProductsPrice,
             eraseAll
         }
     }>
         <BasketCanvas />
-        { children }
+        {children}
     </BasketContext.Provider>
 }

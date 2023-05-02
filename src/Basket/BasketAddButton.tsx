@@ -12,7 +12,9 @@ interface iAddButton {
 }
 
 const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
-    const { toggleAdd, getCount, setCount } = useContext(BasketContext) as iBasketContext;
+    const { getCount, toggleAdd, setCount } = useContext(BasketContext) as iBasketContext;
+
+    const pagetitleCount = getCount(pagetitle)
 
     return (
         <>
@@ -20,20 +22,20 @@ const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
                 <div className={'counter-group me-2 mt-2 d-flex gap-2'} style={{ height: '40px' }}>
 
                     <ButtonGrayAddRemove
-                        counter={getCount(pagetitle)}
+                        counter={pagetitleCount}
                         onClickRemove={() => {
-                            if (getCount(pagetitle) - 1 >= 0) {
-                                setCount(pagetitle, getCount(pagetitle) - 1);
+                            if (pagetitleCount - 1 >= 0) {
+                                setCount(pagetitle, pagetitleCount - 1);
                             }
                         }}
                         onClickAdd={() => {
-                            setCount(pagetitle, getCount(pagetitle) + 1);
+                            setCount(pagetitle, pagetitleCount + 1);
                         }}
                     />
 
                     <Button
                         onClick={() => {
-                            toggleAdd(pagetitle, getCount(pagetitle));
+                            toggleAdd(pagetitle, pagetitleCount);
                         }}
                         icon={<MdShoppingCart size={20} fill={'#fff'} />}
                         btn_style={"blue d-flex align-items-center"}>

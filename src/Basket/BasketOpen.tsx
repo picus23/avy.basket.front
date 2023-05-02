@@ -5,7 +5,7 @@ import Button from "./Button";
 
 
 const BasketOpen = ({ }) => {
-    const { getProductsCount, openDrawer } = useContext(BasketContext);
+    const { basketListCount, openDrawer } = useContext(BasketContext);
 
     return (
         <>
@@ -20,7 +20,7 @@ const BasketOpen = ({ }) => {
                     <Button
                         icon={<MdShoppingCart size={24} fill={'gray'} />}
                         btn_style={"gray"}
-                        counter={getProductsCount()}
+                        counter={basketListCount}
                         counter_style={"up"}                
                         onClick={() => openDrawer() }>
                         <span className="fw-500">Корзина</span>

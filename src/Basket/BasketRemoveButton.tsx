@@ -8,10 +8,10 @@ import Button from "./Button";
 import { MdDelete } from "react-icons/md";
 
 interface iRemoveButton {
-    id: number,
+    pagetitle: string,
 }
 
-const BasketRemoveButton: FC<iRemoveButton> = ({ id }) => {
+const BasketRemoveButton: FC<iRemoveButton> = ({ pagetitle }) => {
     const { getCount, setCount, productErase } = useContext(BasketContext) as iBasketContext;
 
     return (
@@ -21,35 +21,25 @@ const BasketRemoveButton: FC<iRemoveButton> = ({ id }) => {
 
                     <ButtonGrayAddRemove
                         onClickRemove={() => {
-                            if (getCount(id) - 1 >= 0) {
-                                setCount(id, getCount(id) - 1);
+                            if (getCount(pagetitle) - 1 >= 0) {
+                                setCount(pagetitle, getCount(pagetitle) - 1);
                             }
                         }}
                         onClickAdd={() => {
-                            setCount(id, getCount(id) + 1);
+                            setCount(pagetitle, getCount(pagetitle) + 1);
                         }}>
-                        <span style={{ color: '#969696' }}>{getCount(id)}</span>
+                        <span style={{ color: '#969696' }}>{getCount(pagetitle)}</span>
                     </ButtonGrayAddRemove>
 
                     <Button
                         onClick={() => {
-                            productErase(id);
+                            productErase(pagetitle);
                         }}
                         icon={<MdDelete fill="#969696" />}
                         btn_style={"gray d-flex align-items-center"}>
                     </Button>
 
                 </div>
-
-
-
-                {/* <button className='btn' style={{ border: '1px solid #E8E8E8' }}
-                    onClick={() => {
-                        productErase(id);
-                    }}>
-                    <MdDelete fill="#969696" />
-                </button> */}
-
             </div>
         </>
     );

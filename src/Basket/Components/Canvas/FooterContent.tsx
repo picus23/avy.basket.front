@@ -7,7 +7,7 @@ interface iFooter {
 }
 
 const FooterContent: FC<iFooter> = ({ href }) => {
-    const { getProductsCount, getProductsPrice } = useContext(BasketContext);
+    const { basketListCount, getProductsPrice } = useContext(BasketContext);
 
     return (
 
@@ -16,7 +16,7 @@ const FooterContent: FC<iFooter> = ({ href }) => {
                 <hr className='' />
                 <div className="d-flex justify-content-between">
                     <span className="font-size-16-black">Товаров</span>
-                    <span className="font-size-16-black">{getProductsCount()} шт.</span>
+                    <span className="font-size-16-black">{basketListCount} шт.</span>
                 </div>
                 <div className="d-flex justify-content-between">
                     <span className="font-size-16-black">Итого</span>
@@ -27,19 +27,7 @@ const FooterContent: FC<iFooter> = ({ href }) => {
             </div>
         </div>
 
-        // <div className={'_b66b70396c42fad9c205e5cf369f8a1e'}>
-        //     <div className={'basket-price'}>
-        //         <p>Товаров</p>
-        //         <p>{getProductsCount()} шт.</p>
-        //     </div>
-        //     <div className={'basket-positions'}>
-        //         <p>Итого</p>
-        //         <p>{getProductsPrice()} $</p>
-        //     </div>
-        //     <a className={'btn btn-order'} href={href ? href : '/shop'}>Оформить заказ</a>
-        //     <a className={'btn btn-basket'} href={href ? href : '/shop'}>Перейти в корзину</a>
-        // </div>
-    );
+    )
 }
 
 export default FooterContent;
