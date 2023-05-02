@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import { BasketContext, iBasketContext } from "./BasketContext";
 
 // import ButtonGrayAddRemove from "./ButtonGrayAddRemove";
@@ -8,11 +8,10 @@ import Button from "./Button";
 import { MdShoppingCart } from "react-icons/md";
 
 interface iAddButton {
-    id: number,
-    environment?: any
+    pagetitle: string,
 }
 
-const BasketAddButton: FC<iAddButton> = ({ id, environment }) => {
+const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
     const { toggleAdd, getCount, setCount } = useContext(BasketContext) as iBasketContext;
 
     return (
@@ -21,20 +20,20 @@ const BasketAddButton: FC<iAddButton> = ({ id, environment }) => {
                 <div className={'counter-group me-2 mt-2 d-flex gap-2'} style={{ height: '40px' }}>
 
                     <ButtonGrayAddRemove
-                        counter={getCount(id)}
+                        counter={getCount(pagetitle)}
                         onClickRemove={() => {
-                            if (getCount(id) - 1 >= 0) {
-                                setCount(id, getCount(id) - 1);
+                            if (getCount(pagetitle) - 1 >= 0) {
+                                setCount(pagetitle, getCount(pagetitle) - 1);
                             }
                         }}
                         onClickAdd={() => {
-                            setCount(id, getCount(id) + 1);
+                            setCount(pagetitle, getCount(pagetitle) + 1);
                         }}
                     />
 
                     <Button
                         onClick={() => {
-                            toggleAdd(id, getCount(id), environment);
+                            toggleAdd(pagetitle, getCount(pagetitle));
                         }}
                         icon={<MdShoppingCart size={20} fill={'#fff'} />}
                         btn_style={"blue d-flex align-items-center"}>

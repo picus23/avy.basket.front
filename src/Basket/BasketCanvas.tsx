@@ -6,10 +6,10 @@ import { BasketContext } from "./BasketContext";
 import { Drawer } from "antd";
 
 interface BasketCanvasProps {
-    children: ReactNode,
+
 }
 
-const BasketCanvas : FC<BasketCanvasProps> = ({ children }) => {
+const BasketCanvas : FC<BasketCanvasProps> = () => {
     const { getContext, isOpenDrawer, closeDrawer} = useContext(BasketContext);
 
     let mappedItems = "Корзина пуста.";
@@ -20,8 +20,6 @@ const BasketCanvas : FC<BasketCanvasProps> = ({ children }) => {
 
     return (
 
-        <>
-            {children}
             <Drawer placement="right" width={512} open={isOpenDrawer} closable={false} onClose={closeDrawer}>
                 {/* <div className={'_cad536bb9925258cfbb7480e0a68d883 offcanvas offcanvas-end'} id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}> */}
                 <div className='offcanvas-group' id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}>
@@ -38,8 +36,6 @@ const BasketCanvas : FC<BasketCanvasProps> = ({ children }) => {
                 </div>
                 {/* </div> */}
             </Drawer>
-
-        </>
     );
 }
 
