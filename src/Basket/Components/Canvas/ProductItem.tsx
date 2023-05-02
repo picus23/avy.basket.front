@@ -1,5 +1,6 @@
 import { FC, useContext } from "react";
 import Loader from 'kit/components/Loader/Loader';
+import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
 import { BasketContext, DetailBaketItems } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
@@ -14,14 +15,16 @@ const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
     if (!(pagetitle in detailBasketList))
         return <>{pagetitle}<Loader /></>
 
-    const DetailBasketItem = detailBasketList[pagetitle]
+    const detailBasketItem = detailBasketList[pagetitle]
 
 
 
-    return <div className="d-flex">
-        {pagetitle}
-        <BasketRemoveButton pagetitle={pagetitle} />
-    </div>
+    return <FieldEncoding
+        imgUrl={'/kit/empty_square.png'}
+        pagetitle={pagetitle}
+        price={detailBasketItem.price}
+        basketButtons={<BasketRemoveButton pagetitle={pagetitle} />}
+    />
 }
 
 export default ProductItem;

@@ -168,19 +168,19 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
         }
     }
 
+
     const productPrice = (pagetitle: string): number => {
         return 10
     }
 
 
-
     const getProductsPrice = (): number => {
         let price = 0
         Object.values(detailBasketList).forEach(detailBasketItem => {
-            price += detailBasketItem.price
+            price += detailBasketItem.price * basketList[detailBasketItem.pagetitle].count
         })
 
-        return price
+        return Math.round(price)
     }
 
     const eraseAll = (): void => {

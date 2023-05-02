@@ -3,10 +3,10 @@ import { BasketContext } from "../../BasketContext";
 import ButtonCheckout from '../ButtonCheckout';
 
 interface iFooter {
-    href?: string,
+    basketUrl: string
 }
 
-const FooterContent: FC<iFooter> = ({ href }) => {
+const FooterContent: FC<iFooter> = ({ basketUrl }) => {
     const { basketListCount, getProductsPrice } = useContext(BasketContext);
 
     return (
@@ -22,8 +22,8 @@ const FooterContent: FC<iFooter> = ({ href }) => {
                     <span className="font-size-16-black">Итого</span>
                     <span className="font-size-16-black">{getProductsPrice()} $</span>
                 </div>
-                <a className='text-decoration-none' href={href ? href : '/shop'}><ButtonCheckout btn_style="my-btn-checkout w-100">Оформить заказ</ButtonCheckout></a>
-                <a className='text-decoration-none' href={href ? href : '/shop'}><ButtonCheckout btn_style="my-btn-go-to w-100">Перейти в корзину</ButtonCheckout></a>
+                <a className='text-decoration-none' href='#ОформитьЗаказ'><ButtonCheckout btn_style="my-btn-checkout w-100">Оформить заказ</ButtonCheckout></a>
+                <a className='text-decoration-none' href={basketUrl}><ButtonCheckout btn_style="my-btn-go-to w-100">Перейти в корзину</ButtonCheckout></a>
             </div>
         </div>
 

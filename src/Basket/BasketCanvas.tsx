@@ -35,7 +35,7 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
                         }
                     </div>
                     <div className={'offcanvas-footer'}>
-                        <FooterContent />
+                        <FooterContent basketUrl="/basket"/>
                     </div>
                 </div>
                 {/* </div> */}
