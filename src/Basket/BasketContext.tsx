@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useEffect, useState } from "react"
+import { createContext, FC, ReactNode, useEffect, useRef, useState } from "react"
 import BasketCanvas from "./BasketCanvas"
 import { EnvStorage } from "./environment/Interfaces";
 import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
@@ -19,7 +19,7 @@ interface DetailBaketItem {
 
     environment: EnvStorage,
     compatibilityStatus: number,
-    imageUrl: string,
+    img: string,
 
     breadCrumbs: IBreadСrumbs[],
     documents: [],
@@ -39,10 +39,13 @@ export interface DetailBaketItems {
 
 export interface iBasketContext {
     basketList?: BasketItems,
-    detailBasketList?: DetailBaketItems,
     basketListCount?: number,
 
     isOpenDrawer?: boolean,
+
+
+
+    getDetails?: (pagetitle: string) => DetailBaketItem | false,
     closeDrawer?: () => void,
     openDrawer?: () => void,
     toggleAdd?: (pagetitle: string, count: number, openDrawer?: boolean) => void,
@@ -67,6 +70,7 @@ interface iBasket {
 
 
 export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
+    const [isInit, setIsInit] = useState(false);
 
     const [basketList, setBasketList] = useState<BasketItems>({});
     const [detailBasketList, setDetailBasketList] = useState<DetailBaketItems>({})
@@ -77,12 +81,16 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
 
 
     useEffect(() => {
-        try {
-            const tempBasket = JSON.parse(localStorage.getItem('basket') as string)
+        console.log('read storage')
+
+        const storage = localStorage.getItem('basket')
+        console.log('storage', storage)
+        if (storage) {
+            const tempBasket = JSON.parse(storage as string)
             setBasketList(tempBasket)
-        } catch (error) {
-            console.error('Не получилось загрузить данные для корзины')
         }
+
+        setIsInit(true)
     }, [])
 
 
@@ -103,8 +111,14 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
 
 
     useEffect(() => {
-        localStorage.setItem('basket', JSON.stringify(basketList));
-        setBasketListCount(Object.keys(basketList).length)
+        if (isInit){
+
+            console.log('write storage', basketList)
+            localStorage.setItem('basket', JSON.stringify(basketList))
+            
+            
+            setBasketListCount(Object.values(basketList).reduce((a, basketItem) => a + basketItem.count, 0))
+        }
     }, [basketList]);
 
 
@@ -177,7 +191,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
     const getProductsPrice = (): number => {
         let price = 0
         Object.values(detailBasketList).forEach(detailBasketItem => {
-            price += detailBasketItem.price * basketList[detailBasketItem.pagetitle].count
+            price += detailBasketItem.price * (detailBasketItem.pagetitle in basketList ? basketList[detailBasketItem.pagetitle].count : 0)
         })
 
         return Math.round(price)
@@ -187,10 +201,17 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
         setBasketList({})
     }
 
+    const getDetails = (pagetitle: string) : DetailBaketItem | false => {
+        if (pagetitle in detailBasketList) 
+            return detailBasketList[pagetitle];
+
+        return false
+    }
+
     return <BasketContext.Provider value={
         {
             basketList,
-            detailBasketList,
+            getDetails,
             basketListCount,
 
             isOpenDrawer,

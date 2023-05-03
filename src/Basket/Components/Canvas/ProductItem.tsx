@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import Loader from 'kit/components/Loader/Loader';
 import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
-import { BasketContext, DetailBaketItems } from "../../BasketContext";
+import { BasketContext } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 
 interface iProductItem {
@@ -10,19 +10,18 @@ interface iProductItem {
 }
 
 const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
-    const detailBasketList = useContext(BasketContext).detailBasketList as DetailBaketItems;
+    const {getDetails} = useContext(BasketContext)
 
-    if (!(pagetitle in detailBasketList))
+
+    const details = getDetails && getDetails(pagetitle)
+    if (!details)
         return <>{pagetitle}<Loader /></>
-
-    const detailBasketItem = detailBasketList[pagetitle]
-
 
 
     return <FieldEncoding
-        imgUrl={'/kit/empty_square.png'}
+        imgUrl={details.img}
         pagetitle={pagetitle}
-        price={detailBasketItem.price}
+        price={details.price}
         basketButtons={<BasketRemoveButton pagetitle={pagetitle} />}
     />
 }
