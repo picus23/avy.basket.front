@@ -54,7 +54,7 @@ const Avy = ({ }) => {
                         <BasketAddButton pagetitle={'77777777'} />
                         <BasketAddButton pagetitle={'88888888'} />
                         <BasketAddButton pagetitle={'99999999'} />
-                        <BasketAddButton pagetitle={'100000000'} />
+                        <BasketAddButton pagetitle={'10000000'} />
                     </div>
 
                 </div>
