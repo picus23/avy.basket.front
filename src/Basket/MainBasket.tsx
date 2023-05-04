@@ -74,12 +74,11 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
                 </div>
                 <div className="d-flex flex-column p-2 w-25">
                     <h5>Оформление заказа</h5>
-                    <Radio.Group name="radiogroup">
+                    <Radio.Group name="radiogroup" defaultValue={1}>
                         <EncodingOrder
                             value={1}
                             title="Самовывоз"
                             subtitle="г.Москва, ул.Большая Семеновская, дом 49."
-                            checked={true}
                         />
                         <EncodingOrder
                             value={2}
