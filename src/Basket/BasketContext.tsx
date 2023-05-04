@@ -10,6 +10,7 @@ export interface BasketItem {
     pagetitle: string,
     count: number,
     environment: EnvStorage,
+    isDelete: boolean,
 }
 
 interface DetailBaketItem {
@@ -133,7 +134,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         if (count < 1) count = 1;
 
         const tempBasketList = { ...basketList }
-        tempBasketList[pagetitle] = { pagetitle, count, environment }
+        tempBasketList[pagetitle] = { pagetitle, count, environment, isDelete: false }
 
         setBasketList(tempBasketList)
         if (openDrawer)
@@ -153,11 +154,13 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
     const setCount = (pagetitle: string, count: number) => {
         if (pagetitle in basketList) {
-            if (count < 0) {
+            if (count <= 0) {
                 productErase(pagetitle)
             } else {
                 const tempBasketList = { ...basketList }
                 tempBasketList[pagetitle].count = count
+                tempBasketList[pagetitle].isDelete = false
+
 
                 setBasketList(tempBasketList)
             }
@@ -171,7 +174,8 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         if (pagetitle in basketList) {
 
             const tempBasketList = { ...basketList }
-            delete tempBasketList[pagetitle]
+            // delete 
+            tempBasketList[pagetitle].isDelete = true
 
             setBasketList(tempBasketList)
         }

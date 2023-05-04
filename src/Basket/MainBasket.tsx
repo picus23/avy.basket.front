@@ -60,7 +60,7 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
                                             <BasketRemoveButton pagetitle={basketItem.pagetitle} />
                                         }
 
-                                        onErace={() => setCount && setCount(basketItem.pagetitle, -1)}
+                                        isDelete={basketItem.isDelete}
                                         onCancelErace={() => setCount && setCount(basketItem.pagetitle, 1)}
 
                                     />
