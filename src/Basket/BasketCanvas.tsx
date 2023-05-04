@@ -26,7 +26,7 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
 
                             basketListCount && basketList
                                 ? Object.values(basketList).map(basketItem => {
-                                    return <div>
+                                    return <div key={basketItem.pagetitle}>
                                         <ProductItem pagetitle={basketItem.pagetitle} />
                                     </div>
                                 })

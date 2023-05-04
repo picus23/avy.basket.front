@@ -17,63 +17,59 @@ import BasketAddButton from "./Basket/BasketAddButton";
 import BasketOpen from "./Basket/BasketOpen";
 import BasketRemoveButton from "./Basket/BasketRemoveButton";
 import BasketErase from "./Basket/BasketErase";
-import ShopTable from "./Basket/ShopTable";
+import { getDetailBasket, getEnvironment } from './Basket/Api';
+import MainBasket from './Basket/MainBasket';
 
 
 const Avy = ({ }) => {
     return (
         <>
 
-            <Basket>
+            <Basket getEnvironment={getEnvironment} getDetailBasket={getDetailBasket}>
                 <div>
                     {/* Кнопки в таблице */}
                     <div className={'d-flex'}>
                         {/* Кнопка добавления */}
-                        <BasketAddButton id={1} />
+                        <BasketAddButton pagetitle={'11111111'} />
                         {/* Кнопка добавления */}
 
                         {/* Кнопка удаления */}
-                        <BasketRemoveButton id={1} />
+                        <BasketRemoveButton pagetitle={'11111111'} />
                         {/* Кнопка удаления */}
                     </div>
                     <div className={'d-flex'}>
                         {/*    /!* Кнопка добавления *!/*/}
-                        <BasketAddButton id={2} />
+                        <BasketAddButton pagetitle={'22222222'} />
                         {/*    /!* Кнопка добавления *!/*/}
 
                         {/*    /!* Кнопка удаления *!/*/}
-                        <BasketRemoveButton id={2} />
+                        <BasketRemoveButton pagetitle={'22222222'} />
                         {/*    /!* Кнопка удаления *!/*/}
                     </div>
                     <div className='mb-4' style={{ width: '147px' }}>
-                        <BasketAddButton id={3} />
-                        <BasketAddButton id={4} />
-                        <BasketAddButton id={5} />
-                        <BasketAddButton id={6} />
-                        <BasketAddButton id={7} />
-                        <BasketAddButton id={8} />
-                        <BasketAddButton id={9} />
-                        <BasketAddButton id={10} />
+                        <BasketAddButton pagetitle={'33333333'} />
+                        <BasketAddButton pagetitle={'44444444'} />
+                        <BasketAddButton pagetitle={'55555555'} />
+                        <BasketAddButton pagetitle={'66666666'} />
+                        <BasketAddButton pagetitle={'77777777'} />
+                        <BasketAddButton pagetitle={'88888888'} />
+                        <BasketAddButton pagetitle={'99999999'} />
+                        <BasketAddButton pagetitle={'100000000'} />
                     </div>
 
                 </div>
-                {/* Кнопки в таблице */}
 
                
 
-                {/* Кнопка открытия */}
                 <div className='mb-4' style={{ width: '147px' }}>
                     <BasketOpen />
                 </div>
-                {/* Кнопка открытия */}
-
-                {/* Кнопка отчистить корзину */}
                 <BasketErase />
-                {/* Кнопка отчистить корзину */}
 
-                {/* Продукты на странице "Корзина" */}
-                <ShopTable />
-                {/* Продукты на странице "Корзина" */}
+
+
+
+                {/* <MainBasket /> */}
             </Basket>
         </>
     );

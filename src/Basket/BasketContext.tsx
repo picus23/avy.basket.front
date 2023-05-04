@@ -6,7 +6,7 @@ import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
 
 
 
-interface BasketItem {
+export interface BasketItem {
     pagetitle: string,
     count: number,
     environment: EnvStorage,
@@ -65,11 +65,11 @@ export const BasketContext = createContext<iBasketContext>({});
 interface iBasket {
     children: ReactNode,
     getEnvironment: () => EnvStorage,
-    runTask: (task: string, props: {}) => Promise
+    getDetailBasket: (basketList :BasketItem[]) => Promise<DetailBaketItems>
 }
 
 
-export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
+export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket }) => {
     const [isInit, setIsInit] = useState(false);
 
     const [basketList, setBasketList] = useState<BasketItems>({});
@@ -101,7 +101,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
 
 
     const loadDetailBasket = () => {
-        runTask('getDetailBasket', { basket: Object.values(basketList) }).then((detailsBasketList: DetailBaketItems) => {
+        getDetailBasket(Object.values(basketList)).then((detailsBasketList: DetailBaketItems) => {
             setDetailBasketList(detailsBasketList)
         })
     }
