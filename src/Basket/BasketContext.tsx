@@ -21,7 +21,7 @@ interface DetailBaketItem {
     compatibilityStatus: number,
     img: string,
 
-    breadCrumbs: IBreadСrumbs[],
+    breadСrumbs: IBreadСrumbs[],
     documents: [],
 }
 
@@ -81,10 +81,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
 
 
     useEffect(() => {
-        console.log('read storage')
-
         const storage = localStorage.getItem('basket')
-        console.log('storage', storage)
         if (storage) {
             const tempBasket = JSON.parse(storage as string)
             setBasketList(tempBasket)
@@ -113,9 +110,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
     useEffect(() => {
         if (isInit){
 
-            console.log('write storage', basketList)
             localStorage.setItem('basket', JSON.stringify(basketList))
-            
             
             setBasketListCount(Object.values(basketList).reduce((a, basketItem) => a + basketItem.count, 0))
         }
@@ -158,7 +153,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, runTask }) => {
 
     const setCount = (pagetitle: string, count: number) => {
         if (pagetitle in basketList) {
-            if (count < 1) {
+            if (count < 0) {
                 productErase(pagetitle)
             } else {
                 const tempBasketList = { ...basketList }

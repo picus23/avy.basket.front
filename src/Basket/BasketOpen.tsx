@@ -18,12 +18,15 @@ const BasketOpen = ({ }) => {
                     aria-controls="offcanvasBasket"> */}
                 <div className="position-relative">
                     <Button
-                        icon={<MdShoppingCart size={24} fill={'gray'} />}
-                        btn_style={"gray"}
+                        style={{ height: '52px' }}
+                        fontSize="20px"
+                        counterPosition="right"
+                        icon={<MdShoppingCart size={24} fill={'#969696'} />}
+                        btn_style="btn-outline-secondary"
                         counter={basketListCount}
-                        counter_style={"up"}                
-                        onClick={() => openDrawer() }>
-                        <span className="fw-500">Корзина</span>
+                        onClick={() => openDrawer && openDrawer()}
+                    >
+                        Корзина
                     </Button>
                 </div>
                 {/* </button> */}

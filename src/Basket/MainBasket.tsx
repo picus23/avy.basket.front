@@ -2,21 +2,27 @@ import { FC, useContext } from "react";
 import { BasketContext } from "./BasketContext";
 
 import Button from "kit/components/buttons/Button";
+
+
 import CartItem from "kit/components/cartItem/CartItem";
+
+
 import EncodingOrder from "kit/components/encoding/EncodingOrder";
 import EncodingWrapper from "kit/components/encoding/EncodingWrapper";
 import { MdDelete } from "react-icons/md";
 import { Form, Input, Radio, Select } from "antd";
 
 import MainBasketEraceTimer from 'kit/components/basket/MainBasketEraceTimer';
+import BasketRemoveButton from "./BasketRemoveButton";
+import BreadCrumbs from "kit/components/breadСrumbs/BreadCrumbs";
 
 
 interface MainBasketProps {
-    
+    route?: (url: string) => string
 }
- 
-const MainBasket: FC<MainBasketProps> = () => {
-    const { eraseAll, basketList, getDetails } = useContext(BasketContext)
+
+const MainBasket: FC<MainBasketProps> = ({ route }) => {
+    const { eraseAll, basketList, getDetails, setCount } = useContext(BasketContext)
 
 
     return <>
@@ -36,20 +42,31 @@ const MainBasket: FC<MainBasketProps> = () => {
                         basketList
                             ? Object.values(basketList).map((basketItem, index) => {
                                 const detais = getDetails && getDetails(basketItem.pagetitle)
+
+
                                 if (!detais)
                                     return '----'
 
-                                if (index==1)
-                                    return <MainBasketEraceTimer />
 
-                                return <CartItem 
-                                            key={basketItem.pagetitle} 
-                                            price={detais.price} 
-                                            props_list={[]} 
-                                            list={[]} 
-                                            count={basketItem.count} 
-                                            name_item={basketItem.pagetitle} 
-                                        />
+                                return <CartItem
+                                    key={basketItem.pagetitle}
+                                    index={index +1}
+                                    price={detais.price}
+                                    props={[]}
+                                    count={basketItem.count}
+                                    pagetitle={basketItem.pagetitle}
+                                    breadCrumbs={detais.breadСrumbs} 
+                                    breadCrumbsRoute={route}
+                                    imgUrl={detais.img}
+                                    BasketButton={
+                                        <BasketRemoveButton pagetitle={basketItem.pagetitle} />
+                                    }
+
+                                    onErace={() => setCount && setCount(basketItem.pagetitle, -1)}
+                                    onCancelErace={() => setCount && setCount(basketItem.pagetitle, 1)}
+
+                                />
+
                             })
                             : 'Не загружено'
 
@@ -108,5 +125,5 @@ const MainBasket: FC<MainBasketProps> = () => {
 
     </>;
 }
- 
+
 export default MainBasket;
