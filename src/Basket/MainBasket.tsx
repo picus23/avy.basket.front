@@ -23,7 +23,7 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
 
 
     return <EncodingWrapper>
-            <div className="d-flex">
+            {/* <div className="d-flex"> */}
                 <div className="d-flex flex-column w-75 p-2">
                     <div className="d-flex justify-content-between mb-4">
                         <h5>Корзина</h5>
@@ -71,7 +71,7 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
                     </div>
                 </div>
 
-            </div>
+            {/* </div> */}
         </EncodingWrapper>
 }
 

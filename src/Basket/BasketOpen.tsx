@@ -21,6 +21,7 @@ const BasketOpen = ({ }) => {
                         
                         icon={<MdShoppingCart size={24} fill={'#969696'} />}
                         btn_style="btn-outline-secondary"
+                        counterPosition="right"
                         counter={basketListCount}
                         onClick={() => openDrawer && openDrawer()}
                     >

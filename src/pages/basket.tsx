@@ -16,8 +16,11 @@ interface BasketProps {
 
 const BasketIndex: FC<BasketProps> = (props) => {
     return <Basket getEnvironment={getEnvironment} getDetailBasket={getDetailBasket}>
-        <MainBasket />
-        <BasketForm />
+        <div className="d-flex">
+
+            <MainBasket />
+            <BasketForm />
+        </div>
     </Basket>
 }
 

@@ -16,9 +16,10 @@ const BasketRemoveButton: FC<iRemoveButton> = ({ pagetitle }) => {
         return <>not in basket-context</>
 
 
-    return <div>
+    return <div className="d-flex gap-1">
 
         <ButtonGrayAddRemove
+            style={{ height: '40px' }}
             onClickRemove={() => {
                 if (getCount(pagetitle) - 1 >= 0) {
                     setCount && setCount(pagetitle, getCount(pagetitle) - 1);
@@ -35,7 +36,8 @@ const BasketRemoveButton: FC<iRemoveButton> = ({ pagetitle }) => {
                 productErase(pagetitle);
             }}
             icon={<MdDelete fill="#969696" />}
-            btn_style={"gray d-flex align-items-center"}>
+            btn_style="btn-outline-secondary"
+            style={{ height: '40px' }}>
         </Button>
 
     </div>

@@ -41,7 +41,7 @@ const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
                             toggleAdd(pagetitle, pagetitleCount);
                         }}
                         icon={<MdShoppingCart size={20} fill={'#fff'} />}
-                        btn_style={"blue d-flex align-items-center"}>
+                        btn_style="btn-primary">
                     </Button>
                 </div>
             </div>

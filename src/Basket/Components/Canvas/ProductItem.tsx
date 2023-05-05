@@ -2,16 +2,17 @@ import { FC, useContext } from "react";
 import Loader from 'kit/components/Loader/Loader';
 import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
-import { BasketContext } from "../../BasketContext";
+import { BasketContext, BasketItem } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 import { WarningInContext } from "@/Basket/Api";
 
 interface iProductItem {
     pagetitle: string,
+    basketItem: BasketItem,
 }
 
-const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
-    const {getDetails, setCount} = useContext(BasketContext)
+const ProductItem: FC<iProductItem> = ({ pagetitle,basketItem }) => {
+    const { getDetails, setCount,basketList } = useContext(BasketContext)
 
 
     if (!getDetails || !setCount) return <WarningInContext />
@@ -26,7 +27,10 @@ const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
         imgUrl={details.img}
         pagetitle={pagetitle}
         price={details.price}
-        basketButtons={<BasketRemoveButton pagetitle={pagetitle} />}
+        basketButtons={
+            <BasketRemoveButton pagetitle={pagetitle} />
+        }
+        isDelete={basketItem.isDelete}
         onCancelErace={() => setCount(pagetitle, 1)}
     />
 }
