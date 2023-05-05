@@ -1,31 +1,29 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { FC, useContext } from "react";
+import Loader from 'kit/components/Loader/Loader';
+import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
-import {FC} from "react";
-
-import imgDefault from '../icons/icon-default.svg';
+import { BasketContext } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
 
 interface iProductItem {
-    pagetitle : string
-    price : number
-    href : string
+    pagetitle: string,
 }
 
-const ProductItem: FC<iProductItem> = ({pagetitle, price, href}) => {
-    return (
-        <div className={'product-item placeholder-glow'}>
-            <a className={href ? 'item-link' : 'item-link placeholder-glow'} href={href}>
-                <div className={imgDefault ? 'image' : 'image placeholder'}>
-                    <img className={'link-image'} src={imgDefault} alt={'PRODUCT IMAGE'} />
-                </div>
-                <div className={'link-attr'}>
-                    <h5 className={pagetitle ? 'link-title' : 'placeholder link-title'}>{pagetitle ? pagetitle : 'empty'}</h5>
-                    <p className={price ? 'link-description' : 'placeholder link-description'}>{price ? price : 'empty'} $ за шт.</p>
-                </div>
-            </a>
-            <BasketRemoveButton pagetitle={pagetitle} />
-        </div>
-    );
+const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
+    const {getDetails} = useContext(BasketContext)
+
+
+    const details = getDetails && getDetails(pagetitle)
+    if (!details)
+        return <>{pagetitle}<Loader /></>
+
+
+    return <FieldEncoding
+        imgUrl={details.img}
+        pagetitle={pagetitle}
+        price={details.price}
+        basketButtons={<BasketRemoveButton pagetitle={pagetitle} />}
+    />
 }
 
 export default ProductItem;

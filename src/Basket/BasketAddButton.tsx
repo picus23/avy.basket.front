@@ -1,47 +1,46 @@
-import React, {FC, useContext} from "react";
-import {BasketContext, iBasketContext} from "./BasketContext";
+import { FC, useContext } from "react";
+import { BasketContext, iBasketContext } from "./BasketContext";
 
-import imgRemove from "./Components/icons/icon-remove.svg";
-import imgAdd from "./Components/icons/icon-add.svg";
-import iconCart from './Components/icons/icon-cart.svg';
+// import ButtonGrayAddRemove from "./ButtonGrayAddRemove";
+import ButtonGrayAddRemove from "kit/components/buttons/ButtonGrayAddRemove";
+import Button from "./Button";
+// import Button from "kit/components/buttons/Button";
+import { MdShoppingCart } from "react-icons/md";
 
 interface iAddButton {
-    pagetitle : string,
-    environment? : any
+    pagetitle: string,
 }
 
-const BasketAddButton : FC<iAddButton> = ({pagetitle, environment}) => {
-    const {toggleAdd, getCount, setCount} = useContext(BasketContext) as iBasketContext;
+const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
+    const { getCount, toggleAdd, setCount } = useContext(BasketContext) as iBasketContext;
+
+    const pagetitleCount = getCount(pagetitle)
 
     return (
         <>
             <div className={'_44b9484a4c06d5eecc4f7af9ee29b6c5'}>
-                <div className={'counter-group me-2'}>
-                    <button className={'btn'} onClick={
-                        () => {
-                            if (getCount(pagetitle) - 1 >= 0) {
-                                setCount(pagetitle, getCount(pagetitle) - 1);
+                <div className={'counter-group me-2 mt-2 d-flex gap-2'} style={{ height: '40px' }}>
+
+                    <ButtonGrayAddRemove
+                        counter={pagetitleCount}
+                        onClickRemove={() => {
+                            if (pagetitleCount - 1 >= 0) {
+                                setCount(pagetitle, pagetitleCount - 1);
                             }
-                        }
-                    }>
-                        <img src={imgRemove} alt={'REMOVE'}/>
-                    </button>
-                    <button className={'btn btn-count'} disabled={true}>{getCount(pagetitle)}</button>
-                    <button className={'btn'} onClick={
-                        () => {
-                            setCount(pagetitle, getCount(pagetitle) + 1);
-                        }
-                    }>
-                        <img src={imgAdd} alt={'ADD'}/>
-                    </button>
-                </div>
-                <button type={'button'} className={'btn btn-primary'} data-bs-toggle="offcanvas" data-bs-target="#offcanvasBasket" aria-controls="offcanvasBasket"
+                        }}
+                        onClickAdd={() => {
+                            setCount(pagetitle, pagetitleCount + 1);
+                        }}
+                    />
+
+                    <Button
                         onClick={() => {
-                            toggleAdd(pagetitle, getCount(pagetitle), environment);
-                        }
-                    }>
-                    <img src={iconCart} alt={'ADD'}/>
-                </button>
+                            toggleAdd(pagetitle, pagetitleCount);
+                        }}
+                        icon={<MdShoppingCart size={20} fill={'#fff'} />}
+                        btn_style={"blue d-flex align-items-center"}>
+                    </Button>
+                </div>
             </div>
         </>
     );
