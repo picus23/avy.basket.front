@@ -1,4 +1,4 @@
-import { useContext, FC, ReactNode } from "react";
+import { useContext, FC } from "react";
 import ButtonClose from "./Components/Canvas/ButtonClose";
 import ProductItem from "./Components/Canvas/ProductItem";
 import FooterContent from "./Components/Canvas/FooterContent";
@@ -15,7 +15,6 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
     return (
 
             <Drawer placement="right" width={512} open={isOpenDrawer} closable={false} onClose={closeDrawer}>
-                {/* <div className={'_cad536bb9925258cfbb7480e0a68d883 offcanvas offcanvas-end'} id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}> */}
                 <div className='offcanvas-group' id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}>
                     <div className={'offcanvas-header'}>
                         <h5 className='offcanvas-title font-size-20-black fw-500' id={'offcanvasBasketLabel'}>Ваша корзина</h5>
@@ -38,7 +37,6 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
                         <FooterContent basketUrl="/basket"/>
                     </div>
                 </div>
-                {/* </div> */}
             </Drawer>
     );
 }

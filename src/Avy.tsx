@@ -1,17 +1,5 @@
 import React from 'react';
-// import './Avy.css';
 import 'kit/styles/style.css';
-
-// import './styles/BasketAddButton.css';
-// import './styles/BasketRemoveButton.css';
-// import './styles/BasketCanvas.css';
-// import './styles/BasketCloseButton.css';
-// import './styles/BasketProductItem.css';
-// import './styles/BasketCanvasFooter.css';
-// import './styles/BasketOpenButton.css';
-// import './styles/BasketErase.css';
-// import './styles/ShopProductItem.css';
-
 import { Basket } from "./Basket/BasketContext";
 import BasketAddButton from "./Basket/BasketAddButton";
 import BasketOpen from "./Basket/BasketOpen";
@@ -19,6 +7,7 @@ import BasketRemoveButton from "./Basket/BasketRemoveButton";
 import BasketErase from "./Basket/BasketErase";
 import { getDetailBasket, getEnvironment } from './Basket/Api';
 import MainBasket from './Basket/MainBasket';
+import BasketForm from 'kit/components/basket/BasketForm';
 
 
 const Avy = ({ }) => {
@@ -59,17 +48,23 @@ const Avy = ({ }) => {
 
                 </div>
 
-               
+
 
                 <div className='mb-4' style={{ width: '147px' }}>
                     <BasketOpen />
                 </div>
-                <BasketErase />
 
 
 
 
-                {/* <MainBasket /> */}
+
+
+
+
+                <div className='border m-2 d-flex'>
+                    <MainBasket />
+                    <BasketForm />
+                </div>
             </Basket>
         </>
     );
