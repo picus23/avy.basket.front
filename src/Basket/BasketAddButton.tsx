@@ -1,18 +1,21 @@
 import { FC, useContext } from "react";
-import { BasketContext, iBasketContext } from "./BasketContext";
+import { BasketContext } from "./BasketContext";
 
 // import ButtonGrayAddRemove from "./ButtonGrayAddRemove";
 import ButtonGrayAddRemove from "kit/components/buttons/ButtonGrayAddRemove";
 import Button from "./Button";
 // import Button from "kit/components/buttons/Button";
 import { MdShoppingCart } from "react-icons/md";
+import { WarningInContext } from "./Api";
 
 interface iAddButton {
     pagetitle: string,
 }
 
 const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
-    const { getCount, toggleAdd, setCount } = useContext(BasketContext) as iBasketContext;
+    const { getCount, toggleAdd, setCount } = useContext(BasketContext);
+
+    if (!getCount || !toggleAdd || !setCount) return <WarningInContext />
 
     const pagetitleCount = getCount(pagetitle)
 

@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 import { BasketContext } from "../../BasketContext";
 import ButtonCheckout from '../ButtonCheckout';
+import { WarningInContext } from '@/Basket/Api';
 
 interface iFooter {
     basketUrl: string
@@ -8,6 +9,8 @@ interface iFooter {
 
 const FooterContent: FC<iFooter> = ({ basketUrl }) => {
     const { basketListCount, getProductsPrice } = useContext(BasketContext);
+
+    if (!basketListCount || !getProductsPrice) return <WarningInContext />
 
     return (
 

@@ -4,13 +4,17 @@ import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
 import { BasketContext } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
+import { WarningInContext } from "@/Basket/Api";
 
 interface iProductItem {
     pagetitle: string,
 }
 
 const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
-    const {getDetails} = useContext(BasketContext)
+    const {getDetails, setCount} = useContext(BasketContext)
+
+
+    if (!getDetails || !setCount) return <WarningInContext />
 
 
     const details = getDetails && getDetails(pagetitle)
@@ -23,6 +27,7 @@ const ProductItem: FC<iProductItem> = ({ pagetitle }) => {
         pagetitle={pagetitle}
         price={details.price}
         basketButtons={<BasketRemoveButton pagetitle={pagetitle} />}
+        onCancelErace={() => setCount(pagetitle, 1)}
     />
 }
 

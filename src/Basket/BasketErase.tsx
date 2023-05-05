@@ -2,11 +2,14 @@ import { BasketContext } from "./BasketContext";
 import { useContext } from "react";
 import { MdDelete } from "react-icons/md";
 import Button from "./Button";
+import { WarningInContext } from "./Api";
 
 
 
 const BasketErase = ({ }) => {
     const { eraseAll } = useContext(BasketContext);
+
+    if (!eraseAll) return <WarningInContext />
 
     return (
         <>

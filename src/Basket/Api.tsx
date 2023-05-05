@@ -66,3 +66,10 @@ export const getEnvironment = (): EnvStorage => {
         },
     }
 }
+
+
+
+
+export const WarningInContext = () => {
+    return <>- use in context -</>
+}

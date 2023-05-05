@@ -18,9 +18,7 @@ const BasketOpen = ({ }) => {
                     aria-controls="offcanvasBasket"> */}
                 <div className="position-relative">
                     <Button
-                        style={{ height: '52px' }}
-                        fontSize="20px"
-                        counterPosition="right"
+                        
                         icon={<MdShoppingCart size={24} fill={'#969696'} />}
                         btn_style="btn-outline-secondary"
                         counter={basketListCount}
