@@ -4,7 +4,7 @@ import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
 import { BasketContext, BasketItem } from "../../BasketContext";
 import BasketRemoveButton from "../../BasketRemoveButton";
-import { WarningInContext } from "@/Basket/Api";
+import { WarningInContext } from "../../Api";
 
 interface iProductItem {
     pagetitle: string,

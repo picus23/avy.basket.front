@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { BasketContext } from "../../BasketContext";
 import ButtonCheckout from '../ButtonCheckout';
-import { WarningInContext } from '@/Basket/Api';
+import { WarningInContext } from '../../Api';
 
 interface iFooter {
     basketUrl: string
