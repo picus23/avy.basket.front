@@ -10,7 +10,7 @@ export interface BasketItem {
     pagetitle: string,
     count: number,
     environment: EnvStorage,
-    isDelete: boolean,
+    isDelete: false | number,
 }
 
 interface DetailBaketItem {
@@ -66,7 +66,7 @@ export const BasketContext = createContext<iBasketContext>({});
 interface iBasket {
     children: ReactNode,
     getEnvironment: () => EnvStorage,
-    getDetailBasket: (basketList :BasketItem[]) => Promise<DetailBaketItems>
+    getDetailBasket: (basketList: BasketItem[]) => Promise<DetailBaketItems>
 }
 
 
@@ -78,6 +78,9 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
     const [basketListCount, setBasketListCount] = useState(0)
 
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+    const eraceList = useRef<{ [key: string]: number }>({})
+
+
 
 
 
@@ -89,12 +92,35 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         }
 
         setIsInit(true)
+        const interval = setInterval(
+            () => {
+                const passEraceList: {[pagetitle: string]: number} = {}
+
+                Object.keys(eraceList.current).forEach(pagetitle => {
+                    if (eraceList.current[pagetitle] < 0)
+                    setBasketList(prev => {
+                            console.log({pagetitle})
+                            const tempBasketList = { ...prev }
+    
+                            delete tempBasketList[pagetitle]
+
+                            return tempBasketList
+                        })
+                    else
+                        passEraceList[pagetitle] = eraceList.current[pagetitle] - 100 / 5
+                })
+
+                eraceList.current = passEraceList
+            }, 1000)
+        return () => clearInterval(interval)
+
     }, [])
 
 
     const closeDrawer = () => {
         setIsOpenDrawer(false)
     }
+
 
     const openDrawer = () => {
         setIsOpenDrawer(true)
@@ -107,15 +133,17 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         })
     }
 
-
     useEffect(() => {
-        if (isInit){
+        if (isInit) {
 
             localStorage.setItem('basket', JSON.stringify(basketList))
-            
+
             setBasketListCount(Object.values(basketList).reduce((a, basketItem) => a + basketItem.count, 0))
         }
     }, [basketList]);
+
+
+
 
 
     useEffect(() => {
@@ -124,8 +152,6 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         else
             setDetailBasketList({})
     }, [basketListCount])
-
-
 
 
     const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
@@ -142,8 +168,6 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
     }
 
 
-
-
     const getCount = (pagetitle: string) => {
         if (pagetitle in basketList) {
             return basketList[pagetitle].count
@@ -151,6 +175,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
             return 0
         }
     }
+
 
     const setCount = (pagetitle: string, count: number) => {
         if (pagetitle in basketList) {
@@ -172,13 +197,17 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
     const productErase = (pagetitle: string): void => {
         if (pagetitle in basketList) {
-
             const tempBasketList = { ...basketList }
             // delete 
-            tempBasketList[pagetitle].isDelete = true
+            tempBasketList[pagetitle].isDelete = 100
+            eraceList.current[pagetitle] = 100
 
             setBasketList(tempBasketList)
         }
+    }
+
+    const productRecover = (pagetitle: string): void => {
+
     }
 
 
@@ -200,8 +229,8 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         setBasketList({})
     }
 
-    const getDetails = (pagetitle: string) : DetailBaketItem | false => {
-        if (pagetitle in detailBasketList) 
+    const getDetails = (pagetitle: string): DetailBaketItem | false => {
+        if (pagetitle in detailBasketList)
             return detailBasketList[pagetitle];
 
         return false
