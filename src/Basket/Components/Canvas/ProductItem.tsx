@@ -22,9 +22,7 @@ const ProductItem: FC<iProductItem> = ({ basketItem }) => {
         return <>{basketItem.pagetitle}<Loader /></>
 
 
-    return <>
-        { basketItem.isDelete } |
-        <FieldEncoding
+    return <FieldEncoding
             imgUrl={details.img}
             pagetitle={basketItem.pagetitle}
             price={details.price}
@@ -34,7 +32,7 @@ const ProductItem: FC<iProductItem> = ({ basketItem }) => {
             isDelete={basketItem.isDelete}
             onCancelErace={() => setCount(basketItem.pagetitle, 1)}
         />
-    </>
+
 }
 
 export default ProductItem;

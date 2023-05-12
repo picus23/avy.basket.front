@@ -1,16 +1,9 @@
 import { FC, useContext } from "react";
 import { BasketContext } from "./BasketContext";
-
 import Button from "kit/components/buttons/Button";
-
-
 import CartItem from "kit/components/cartItem/CartItem";
-
-
-import EncodingOrder from "kit/components/encoding/EncodingOrder";
 import EncodingWrapper from "kit/components/encoding/EncodingWrapper";
 import { MdDelete } from "react-icons/md";
-import { Form, Input, Radio, Select } from "antd";
 import BasketRemoveButton from "./BasketRemoveButton";
 
 
@@ -23,7 +16,7 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
 
 
     return <EncodingWrapper>
-            {/* <div className="d-flex"> */}
+    
                 <div className="d-flex flex-column w-75 p-2">
                     <div className="d-flex justify-content-between mb-4">
                         <h5>Корзина</h5>
@@ -70,8 +63,6 @@ const MainBasket: FC<MainBasketProps> = ({ route }) => {
 
                     </div>
                 </div>
-
-            {/* </div> */}
         </EncodingWrapper>
 }
 
