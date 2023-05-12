@@ -24,9 +24,9 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
                         {
 
                             basketListCount && basketList
-                                ? Object.values(basketList).map(basketItem => {
+                                ? basketList.map(basketItem => {
                                     return <div key={basketItem.pagetitle}>
-                                        <ProductItem basketItem={basketItem} pagetitle={basketItem.pagetitle} />
+                                        <ProductItem basketItem={basketItem} />
                                     </div>
                                 })
                                 : "Корзина пуста."

@@ -7,32 +7,34 @@ import BasketRemoveButton from "../../BasketRemoveButton";
 import { WarningInContext } from "../../Api";
 
 interface iProductItem {
-    pagetitle: string,
     basketItem: BasketItem,
 }
 
-const ProductItem: FC<iProductItem> = ({ pagetitle,basketItem }) => {
-    const { getDetails, setCount,basketList } = useContext(BasketContext)
+const ProductItem: FC<iProductItem> = ({ basketItem }) => {
+    const { getDetails, setCount, basketList } = useContext(BasketContext)
 
 
     if (!getDetails || !setCount) return <WarningInContext />
 
 
-    const details = getDetails && getDetails(pagetitle)
+    const details = getDetails && getDetails(basketItem.pagetitle)
     if (!details)
-        return <>{pagetitle}<Loader /></>
+        return <>{basketItem.pagetitle}<Loader /></>
 
 
-    return <FieldEncoding
-        imgUrl={details.img}
-        pagetitle={pagetitle}
-        price={details.price}
-        basketButtons={
-            <BasketRemoveButton pagetitle={pagetitle} />
-        }
-        isDelete={basketItem.isDelete}
-        onCancelErace={() => setCount(pagetitle, 1)}
-    />
+    return <>
+        { basketItem.isDelete } |
+        <FieldEncoding
+            imgUrl={details.img}
+            pagetitle={basketItem.pagetitle}
+            price={details.price}
+            basketButtons={
+                <BasketRemoveButton pagetitle={basketItem.pagetitle} />
+            }
+            isDelete={basketItem.isDelete}
+            onCancelErace={() => setCount(basketItem.pagetitle, 1)}
+        />
+    </>
 }
 
 export default ProductItem;

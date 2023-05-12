@@ -4,16 +4,21 @@ import { BasketContext, iBasketContext } from "./BasketContext";
 import ButtonGrayAddRemove from "./ButtonGrayAddRemove";
 import Button from "./Button";
 import { MdDelete } from "react-icons/md";
+import { WarningInContext } from "./Api";
 
 interface iRemoveButton {
     pagetitle: string,
 }
 
 const BasketRemoveButton: FC<iRemoveButton> = ({ pagetitle }) => {
-    const { getCount, setCount, productErase } = useContext(BasketContext) as iBasketContext;
+    const { getBasketItem, setCount, productErase } = useContext(BasketContext) as iBasketContext;
 
-    if (!getCount || !setCount || !productErase)
-        return <>not in basket-context</>
+    if (!getBasketItem || !setCount || !productErase)
+        return <WarningInContext message="!getBasketItem || !setCount || !productErase"/>
+
+    const basketItem = getBasketItem(pagetitle)
+
+
 
 
     return <div className="d-flex gap-1">
@@ -21,14 +26,14 @@ const BasketRemoveButton: FC<iRemoveButton> = ({ pagetitle }) => {
         <ButtonGrayAddRemove
             style={{ height: '40px' }}
             onClickRemove={() => {
-                if (getCount(pagetitle) - 1 >= 0) {
-                    setCount && setCount(pagetitle, getCount(pagetitle) - 1);
+                if (basketItem && basketItem.count - 1 >= 0) {
+                    setCount(pagetitle, basketItem.count - 1);
                 }
             }}
             onClickAdd={() => {
-                setCount(pagetitle, getCount(pagetitle) + 1);
+                setCount(pagetitle, basketItem ? basketItem.count + 1 : 1);
             }}>
-            <span style={{ color: '#969696' }}>{getCount(pagetitle)}</span>
+            <span style={{ color: '#969696' }}>{basketItem ? basketItem.count : 0}</span>
         </ButtonGrayAddRemove>
 
         <Button

@@ -13,11 +13,11 @@ interface iAddButton {
 }
 
 const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
-    const { getCount, toggleAdd, setCount } = useContext(BasketContext);
+    const { getBasketItem, toggleAdd, setCount } = useContext(BasketContext);
 
-    if (!getCount || !toggleAdd || !setCount) return <WarningInContext />
+    if (!getBasketItem || !toggleAdd || !setCount) return <WarningInContext message="!getBasketItem || !toggleAdd || !setCount" />
 
-    const pagetitleCount = getCount(pagetitle)
+    const basketItem = getBasketItem(pagetitle)
 
     return (
         <>
@@ -25,20 +25,20 @@ const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
                 <div className={'counter-group me-2 mt-2 d-flex gap-2'} style={{ height: '40px' }}>
 
                     <ButtonGrayAddRemove
-                        counter={pagetitleCount}
+                        counter={basketItem?.count ?? 0}
                         onClickRemove={() => {
-                            if (pagetitleCount - 1 >= 0) {
-                                setCount(pagetitle, pagetitleCount - 1);
-                            }
+                            if (basketItem && basketItem.count - 1 >= 0)
+                                setCount(pagetitle, basketItem.count - 1)
+                            
                         }}
                         onClickAdd={() => {
-                            setCount(pagetitle, pagetitleCount + 1);
+                            setCount(pagetitle, basketItem ? basketItem.count + 1 : 1);
                         }}
                     />
 
                     <Button
                         onClick={() => {
-                            toggleAdd(pagetitle, pagetitleCount);
+                            toggleAdd(pagetitle, basketItem?.count ?? 1);
                         }}
                         icon={<MdShoppingCart size={20} fill={'#fff'} />}
                         btn_style="btn-primary">

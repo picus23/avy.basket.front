@@ -10,7 +10,7 @@ export interface BasketItem {
     pagetitle: string,
     count: number,
     environment: EnvStorage,
-    isDelete: false | number,
+    isDelete: number | false,
 }
 
 interface DetailBaketItem {
@@ -29,9 +29,6 @@ interface DetailBaketItem {
 
 
 
-interface BasketItems {
-    [pagetitle: string]: BasketItem,
-}
 
 export interface DetailBaketItems {
     [pagetitle: string]: DetailBaketItem,
@@ -39,7 +36,7 @@ export interface DetailBaketItems {
 
 
 export interface iBasketContext {
-    basketList?: BasketItems,
+    basketList?: BasketItem[],
     basketListCount?: number,
 
     isOpenDrawer?: boolean,
@@ -51,8 +48,8 @@ export interface iBasketContext {
     openDrawer?: () => void,
     toggleAdd?: (pagetitle: string, count: number, openDrawer?: boolean) => void,
 
-    getCount?: (pagetitle: string) => number,
     setCount?: (pagetitle: string, count: number) => void,
+    getBasketItem?: (pagetitle: string) => BasketItem | undefined,
 
     productErase?: (pagetitle: string) => void,
     productPrice?: (pagetitle: string) => number,
@@ -73,13 +70,11 @@ interface iBasket {
 export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket }) => {
     const [isInit, setIsInit] = useState(false);
 
-    const [basketList, setBasketList] = useState<BasketItems>({});
+    const [basketList, setBasketList] = useState<BasketItem[]>([]);
     const [detailBasketList, setDetailBasketList] = useState<DetailBaketItems>({})
     const [basketListCount, setBasketListCount] = useState(0)
 
     const [isOpenDrawer, setIsOpenDrawer] = useState(false)
-    const eraceList = useRef<{ [key: string]: number }>({})
-
 
 
 
@@ -92,28 +87,6 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         }
 
         setIsInit(true)
-        const interval = setInterval(
-            () => {
-                const passEraceList: {[pagetitle: string]: number} = {}
-
-                Object.keys(eraceList.current).forEach(pagetitle => {
-                    if (eraceList.current[pagetitle] < 0)
-                    setBasketList(prev => {
-                            console.log({pagetitle})
-                            const tempBasketList = { ...prev }
-    
-                            delete tempBasketList[pagetitle]
-
-                            return tempBasketList
-                        })
-                    else
-                        passEraceList[pagetitle] = eraceList.current[pagetitle] - 100 / 5
-                })
-
-                eraceList.current = passEraceList
-            }, 1000)
-        return () => clearInterval(interval)
-
     }, [])
 
 
@@ -128,22 +101,47 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
 
     const loadDetailBasket = () => {
-        getDetailBasket(Object.values(basketList)).then((detailsBasketList: DetailBaketItems) => {
+        getDetailBasket(basketList).then((detailsBasketList: DetailBaketItems) => {
             setDetailBasketList(detailsBasketList)
         })
     }
 
+
     useEffect(() => {
         if (isInit) {
-
             localStorage.setItem('basket', JSON.stringify(basketList))
 
-            setBasketListCount(Object.values(basketList).reduce((a, basketItem) => a + basketItem.count, 0))
+            setBasketListCount(basketList.reduce((a, basketItem) => a + basketItem.count, 0))
+
+
+
+
+            const interval = setInterval(
+                () => {
+
+                    setBasketList(prev =>
+
+                        [...prev
+                            .map(basketItem => {
+                                if (basketItem.isDelete !== false)
+                                    basketItem.isDelete -= 25
+
+                                return basketItem
+                            })
+                            .filter(basketItem => {
+                                if (basketItem.isDelete !== false)
+                                    if (basketItem.isDelete <= 0)
+                                        return false
+                                return true
+                            })
+                        ]
+
+                    )
+
+                }, 1000)
+            return () => clearInterval(interval)
         }
     }, [basketList]);
-
-
-
 
 
     useEffect(() => {
@@ -159,52 +157,57 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
         if (count < 1) count = 1;
 
-        const tempBasketList = { ...basketList }
-        tempBasketList[pagetitle] = { pagetitle, count, environment, isDelete: false }
+        const newBasketItem = { pagetitle, count, environment, isDelete: false }
 
-        setBasketList(tempBasketList)
+        setBasketList([...basketList, newBasketItem])
         if (openDrawer)
             setIsOpenDrawer(true)
     }
 
 
-    const getCount = (pagetitle: string) => {
-        if (pagetitle in basketList) {
-            return basketList[pagetitle].count
-        } else {
-            return 0
-        }
+    const getBasketItem = (pagetitle: string) => {
+        return basketList.find(item => item.pagetitle == pagetitle)
     }
 
 
+
+
+
     const setCount = (pagetitle: string, count: number) => {
-        if (pagetitle in basketList) {
-            if (count <= 0) {
-                productErase(pagetitle)
-            } else {
-                const tempBasketList = { ...basketList }
-                tempBasketList[pagetitle].count = count
-                tempBasketList[pagetitle].isDelete = false
+        const basketItem = getBasketItem(pagetitle)
+
+        if (basketItem)
+            setBasketList(prev => prev.map(item => {
+                if (item.pagetitle != pagetitle)
+                    return item
+
+                if (count <= 0) {
+                    item.count = 0
+                    basketItem.isDelete = 100
+                } else {
+                    item.count = count
+                    item.isDelete = false
+                }
 
 
-                setBasketList(tempBasketList)
-            }
-        } else {
+                return item
+            }))
+        else
             toggleAdd(pagetitle, count, false)
-        }
     }
 
 
     const productErase = (pagetitle: string): void => {
-        if (pagetitle in basketList) {
-            const tempBasketList = { ...basketList }
-            // delete 
-            tempBasketList[pagetitle].isDelete = 100
-            eraceList.current[pagetitle] = 100
+        setBasketList(prev => prev.map(item => {
+            if (item.pagetitle != pagetitle)
+                return item
 
-            setBasketList(tempBasketList)
-        }
+            item.isDelete = 100
+
+            return item
+        }))
     }
+
 
     const productRecover = (pagetitle: string): void => {
 
@@ -216,6 +219,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
     }
 
 
+
     const getProductsPrice = (): number => {
         let price = 0
         Object.values(detailBasketList).forEach(detailBasketItem => {
@@ -225,9 +229,11 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         return Math.round(price)
     }
 
+
     const eraseAll = (): void => {
-        setBasketList({})
+        setBasketList([])
     }
+
 
     const getDetails = (pagetitle: string): DetailBaketItem | false => {
         if (pagetitle in detailBasketList)
@@ -235,6 +241,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
         return false
     }
+
 
     return <BasketContext.Provider value={
         {
@@ -247,8 +254,8 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
             openDrawer,
             toggleAdd,
 
+            getBasketItem,
             setCount,
-            getCount,
 
             productErase,
             productPrice,

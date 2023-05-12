@@ -1,3 +1,4 @@
+import { message } from "antd"
 import { BasketItem, DetailBaketItems } from "./BasketContext"
 import { EnvStorage } from "./environment/Interfaces"
 
@@ -70,6 +71,6 @@ export const getEnvironment = (): EnvStorage => {
 
 
 
-export const WarningInContext = () => {
-    return <>- use in context -</>
+export const WarningInContext = ({message = 'use in context'}: {message?: string}) => {
+    return <div style={{border: '1px solid #222', padding: 10, background: '#f00'}}>- {message} -</div>
 }
