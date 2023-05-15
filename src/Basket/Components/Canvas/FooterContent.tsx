@@ -20,7 +20,7 @@ const FooterContent: FC<iFooter> = ({ basketUrl }) => {
                 </div>
                 <div className="d-flex justify-content-between">
                     <span className="font-size-16-black">Итого</span>
-                    <span className="font-size-16-black">{getProductsPrice && getProductsPrice()} $</span>
+                    <span className="font-size-16-black">{getProductsPrice && (getProductsPrice() ?? '$$$$')} $</span>
                 </div>
                 <a className='text-decoration-none' href='#ОформитьЗаказ'><ButtonCheckout btn_style="my-btn-checkout w-100">Оформить заказ</ButtonCheckout></a>
                 <a className='text-decoration-none' href={basketUrl}><ButtonCheckout btn_style="my-btn-go-to w-100">Перейти в корзину</ButtonCheckout></a>
