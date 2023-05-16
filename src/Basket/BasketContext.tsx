@@ -9,7 +9,7 @@ import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
 export interface BasketItem {
     pagetitle: string,
     count: number,
-    environment: EnvStorage,
+    environment?: EnvStorage,
     isDelete: number | false,
 }
 
@@ -18,7 +18,7 @@ interface DetailBaketItem {
     count: number,
     price: number,
 
-    environment: EnvStorage,
+    environment?: EnvStorage,
     compatibilityStatus: number,
     img: string,
 
@@ -62,7 +62,7 @@ export const BasketContext = createContext<iBasketContext>({});
 
 interface iBasket {
     children: ReactNode,
-    getEnvironment: () => EnvStorage,
+    getEnvironment: () => EnvStorage | undefined,
     getDetailBasket: (basketList: BasketItem[]) => Promise<DetailBaketItems>
 }
 

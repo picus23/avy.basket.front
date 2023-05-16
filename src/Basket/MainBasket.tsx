@@ -7,15 +7,18 @@ import Button from "kit/components/buttons/Button";
 import CartItem from "kit/components/cartItem/CartItem";
 
 
-import EncodingOrder from "kit/components/encoding/EncodingOrder";
+
 import EncodingWrapper from "kit/components/encoding/EncodingWrapper";
 import { MdDelete } from "react-icons/md";
-import { Form, Input, Radio, Select } from "antd";
 import BasketRemoveButton from "./BasketRemoveButton";
 
 
+import {NextUrl} from 'kit/components/breadСrumbs/interface'
+
+
+
 interface MainBasketProps {
-    route?: (url: string) => string
+    route?: (url: string) => NextUrl
 }
 
 const MainBasket: FC<MainBasketProps> = ({ route }) => {
