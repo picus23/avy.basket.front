@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useEffect, useRef, useState } from "react"
+import { createContext, FC, ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import BasketCanvas from "./BasketCanvas"
 import { EnvStorage } from "./environment/Interfaces";
 import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
@@ -9,7 +9,7 @@ import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
 export interface BasketItem {
     pagetitle: string,
     count: number,
-    environment: EnvStorage,
+    environment?: EnvStorage,
     isDelete: number | false,
 }
 
@@ -18,7 +18,7 @@ interface DetailBaketItem {
     count: number,
     price: number,
 
-    environment: EnvStorage,
+    environment?: EnvStorage,
     compatibilityStatus: number,
     img: string,
 
@@ -53,7 +53,7 @@ export interface iBasketContext {
 
     productErase?: (pagetitle: string) => void,
     productPrice?: (pagetitle: string) => number,
-    getProductsPrice?: () => number,
+    getProductsPrice?: () => number | false,
     eraseAll?: () => void,
 }
 
@@ -62,7 +62,7 @@ export const BasketContext = createContext<iBasketContext>({});
 
 interface iBasket {
     children: ReactNode,
-    getEnvironment: () => EnvStorage,
+    getEnvironment: () => EnvStorage | undefined,
     getDetailBasket: (basketList: BasketItem[]) => Promise<DetailBaketItems>
 }
 
@@ -100,11 +100,11 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
     }
 
 
-    const loadDetailBasket = () => {
+    const loadDetailBasket = useCallback(() => {
         getDetailBasket(basketList).then((detailsBasketList: DetailBaketItems) => {
             setDetailBasketList(detailsBasketList)
         })
-    }
+    }, [basketList, getDetailBasket])
 
 
     useEffect(() => {
@@ -141,7 +141,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
                 }, 1000)
             return () => clearInterval(interval)
         }
-    }, [basketList]);
+    }, [basketList, isInit]);
 
 
     useEffect(() => {
@@ -149,7 +149,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
             loadDetailBasket()
         else
             setDetailBasketList({})
-    }, [basketListCount])
+    }, [basketListCount, loadDetailBasket])
 
 
     const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
@@ -157,7 +157,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
         if (count < 1) count = 1;
 
-        const newBasketItem = { pagetitle, count, environment, isDelete: false }
+        const newBasketItem : BasketItem = { pagetitle, count, environment, isDelete: false }
 
         setBasketList([...basketList, newBasketItem])
         if (openDrawer)
@@ -220,11 +220,16 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
 
 
-    const getProductsPrice = (): number => {
+    const getProductsPrice = (): number | false => {
         let price = 0
-        Object.values(detailBasketList).forEach(detailBasketItem => {
-            price += detailBasketItem.price * (detailBasketItem.pagetitle in basketList ? basketList[detailBasketItem.pagetitle].count : 0)
-        })
+
+        for (const basketItem of basketList) {
+            if (!(basketItem.pagetitle in detailBasketList))    
+                return false
+
+            price += basketItem.count * detailBasketList[basketItem.pagetitle].price
+        }
+
 
         return Math.round(price)
     }

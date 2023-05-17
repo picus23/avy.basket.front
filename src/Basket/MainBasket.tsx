@@ -7,8 +7,12 @@ import { MdDelete } from "react-icons/md";
 import BasketRemoveButton from "./BasketRemoveButton";
 
 
+import {NextUrl} from 'kit/components/breadСrumbs/interface'
+
+
+
 interface MainBasketProps {
-    route?: (url: string) => string
+    route?: (url: string) => NextUrl
 }
 
 const MainBasket: FC<MainBasketProps> = ({ route }) => {
