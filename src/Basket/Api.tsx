@@ -4,7 +4,7 @@ import { EnvStorage } from "./environment/Interfaces"
 
 
 export const getDetailBasket = (basketList :BasketItem[]): Promise<DetailBaketItems> => {
-    console.log('basketList', basketList)
+    console.log('getDetailBasket', basketList)
 
 
 

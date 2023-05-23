@@ -101,10 +101,14 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
 
     const loadDetailBasket = useCallback(() => {
-        getDetailBasket(basketList).then((detailsBasketList: DetailBaketItems) => {
-            setDetailBasketList(detailsBasketList)
+        const loaded = basketList.filter(basketItem => {
+            return !(basketItem.pagetitle in detailBasketList)
         })
-    }, [basketList, getDetailBasket])
+        if (loaded.length)
+            getDetailBasket(basketList).then((detailsBasketList: DetailBaketItems) => {
+                setDetailBasketList(detailsBasketList)
+            })
+    }, [basketList])
 
 
     useEffect(() => {
@@ -119,26 +123,24 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
             const interval = setInterval(
                 () => {
 
-                    setBasketList(prev =>
+                    const currentBasketList = [...basketList]
+                    const deleted = currentBasketList.filter(basketItem => basketItem.isDelete)
 
-                        [...prev
-                            .map(basketItem => {
-                                if (basketItem.isDelete !== false)
-                                    basketItem.isDelete -= 25
+                    if (deleted.length) {
+                        deleted.forEach(basketItem => {
+                            if (basketItem.isDelete !== false)
+                                basketItem.isDelete -= 5
+                        })
 
-                                return basketItem
-                            })
-                            .filter(basketItem => {
-                                if (basketItem.isDelete !== false)
-                                    if (basketItem.isDelete <= 0)
-                                        return false
-                                return true
-                            })
-                        ]
+                        setBasketList(currentBasketList.filter(basketItem => {
+                            if (basketItem.isDelete !== false)
+                                if (basketItem.isDelete <= 0)
+                                    return false
+                            return true
+                        }))
+                    }
 
-                    )
-
-                }, 1000)
+                }, 200)
             return () => clearInterval(interval)
         }
     }, [basketList, isInit]);
