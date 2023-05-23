@@ -152,22 +152,34 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
     }, [basketListCount, loadDetailBasket])
 
 
+    const getBasketItem = (pagetitle: string) => {
+        return basketList.find(item => item.pagetitle == pagetitle)
+    }
+
+
     const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
         const environment = getEnvironment()
 
-        if (count < 1) count = 1;
+        setBasketList(prev => {
+            const nextBasketList = [...prev]
+            const itemExists = nextBasketList.find(item => item.pagetitle == pagetitle)
+            if (count < 1) count = 1;
+            if (itemExists) {
+                itemExists.count = count
+                return nextBasketList
+            } else {
+                const newBasketItem: BasketItem = { pagetitle, count, environment, isDelete: false }
+                return [...nextBasketList, newBasketItem]
+            }
 
-        const newBasketItem : BasketItem = { pagetitle, count, environment, isDelete: false }
+        })
 
-        setBasketList([...basketList, newBasketItem])
         if (openDrawer)
             setIsOpenDrawer(true)
     }
 
 
-    const getBasketItem = (pagetitle: string) => {
-        return basketList.find(item => item.pagetitle == pagetitle)
-    }
+
 
 
 
@@ -224,7 +236,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
         let price = 0
 
         for (const basketItem of basketList) {
-            if (!(basketItem.pagetitle in detailBasketList))    
+            if (!(basketItem.pagetitle in detailBasketList))
                 return false
 
             price += basketItem.count * detailBasketList[basketItem.pagetitle].price
