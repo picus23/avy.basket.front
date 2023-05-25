@@ -6,6 +6,8 @@ export type range = {
     to: number,
 }
 
+type userRange = [number, number]
+
 export interface EItem {
     active_compatibility: string[],
     id: number,
@@ -15,9 +17,9 @@ export interface EItem {
 export interface EnvStorage {
     compatibility: string[],
     id: string,
-    wp: range,
-    wr: range,
-    wt: range,
+    wp: userRange,
+    wr: userRange,
+    wt: userRange,
 }
 
 export interface TEnv {

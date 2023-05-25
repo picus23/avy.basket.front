@@ -56,15 +56,9 @@ export const getEnvironment = (): EnvStorage => {
     return {
         compatibility: [],
         id: '1',
-        wp: {
-            from: 0, to: 0
-        },
-        wr: {
-            from: 0, to: 0
-        },
-        wt: {
-            from: 0, to: 0
-        },
+        wp: [0, 10],
+        wr: [0, 300],
+        wt: [0, 25],
     }
 }
 
