@@ -13,9 +13,12 @@ export const getDetailBasket = (basketList :BasketItem[]): Promise<DetailBaketIt
         result[basketItem.pagetitle] = {
             pagetitle: basketItem.pagetitle,
             count: basketItem.count,
+            prittyPagetitle: false,
             price: 404,
         
-            environment: basketItem.environment,
+            // props: {
+            //     environment: basketItem.environment
+            // },
             compatibilityStatus: 4,
             img: '/logo192.png',
         
