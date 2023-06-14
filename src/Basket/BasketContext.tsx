@@ -4,17 +4,21 @@ import { EnvStorage } from "./environment/Interfaces";
 import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
 
 
-
+export interface BasketItemProps {
+    _length?: number,
+    environment?: EnvStorage,
+}
 
 export interface BasketItem {
     pagetitle: string,
     count: number,
-    environment?: EnvStorage,
     isDelete: number | false,
+    props?: BasketItemProps,
 }
 
 interface DetailBaketItem {
     pagetitle: string,
+    prittyPagetitle: false | string,
     count: number,
     price: number,
 
@@ -62,12 +66,12 @@ export const BasketContext = createContext<iBasketContext>({});
 
 interface iBasket {
     children: ReactNode,
-    getEnvironment: () => EnvStorage | undefined,
+    getProps: () => BasketItemProps,
     getDetailBasket: (basketList: BasketItem[]) => Promise<DetailBaketItems>
 }
 
 
-export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket }) => {
+export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => {
     const [isInit, setIsInit] = useState(false);
 
     const [basketList, setBasketList] = useState<BasketItem[]>([]);
@@ -160,7 +164,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
 
     const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
-        const environment = getEnvironment()
+        const props = getProps()
 
         setBasketList(prev => {
             const nextBasketList = [...prev]
@@ -170,7 +174,7 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
                 itemExists.count = count
                 return nextBasketList
             } else {
-                const newBasketItem: BasketItem = { pagetitle, count, environment, isDelete: false }
+                const newBasketItem: BasketItem = { pagetitle, count, props, isDelete: false }
                 return [...nextBasketList, newBasketItem]
             }
 
@@ -220,11 +224,6 @@ export const Basket: FC<iBasket> = ({ children, getEnvironment, getDetailBasket 
 
             return item
         }))
-    }
-
-
-    const productRecover = (pagetitle: string): void => {
-
     }
 
 

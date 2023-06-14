@@ -24,7 +24,7 @@ const ProductItem: FC<iProductItem> = ({ basketItem }) => {
 
     return <FieldEncoding
             imgUrl={details.img}
-            pagetitle={basketItem.pagetitle}
+            pagetitle={details.pagetitle}
             price={details.price}
             basketButtons={
                 <BasketRemoveButton pagetitle={basketItem.pagetitle} />
