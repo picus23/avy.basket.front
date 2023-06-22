@@ -20,7 +20,7 @@ const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
     return (
         <>
             <div>
-                <div className={'counter-group me-2 mt-2 d-flex gap-2'} style={{ height: '40px' }}>
+                <div className={'counter-group d-flex gap-2'} style={{ height: '40px' }}>
 
                     <ButtonGrayAddRemove
                         counter={basketItem?.count ?? 0}
