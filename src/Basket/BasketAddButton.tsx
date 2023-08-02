@@ -8,9 +8,10 @@ import { WarningInContext } from "./Api";
 
 interface iAddButton {
     pagetitle: string,
+    title?: string,
 }
 
-const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
+const BasketAddButton: FC<iAddButton> = ({ pagetitle, title }) => {
     const { getBasketItem, toggleAdd, setCount } = useContext(BasketContext);
 
     if (!getBasketItem || !toggleAdd || !setCount) return <WarningInContext message="!getBasketItem || !toggleAdd || !setCount" />
@@ -39,8 +40,9 @@ const BasketAddButton: FC<iAddButton> = ({ pagetitle }) => {
                             toggleAdd(pagetitle, basketItem?.count ?? 1);
                         }}
                         icon={<MdShoppingCart size={20} fill={'#fff'} />}
-                        btn_style="btn-primary">
-                    </Button>
+                        btn_style="btn-primary"
+                        
+                    >{title}</Button>
                 </div>
             </div>
         </>

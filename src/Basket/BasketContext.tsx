@@ -254,7 +254,10 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
 
 
     const getDetails = (pagetitle: string): DetailBaketItem | false => {
-        if (pagetitle in detailBasketList)
+        if (!pagetitle)
+            console.info({pagetitle})
+
+        if (pagetitle && pagetitle in detailBasketList)
             return detailBasketList[pagetitle];
 
         return false

@@ -15,12 +15,12 @@ const BasketCanvas : FC<BasketCanvasProps> = () => {
     return (
 
             <Drawer placement="right" width={512} open={isOpenDrawer} closable={false} onClose={closeDrawer}>
-                <div className='offcanvas-group' id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}>
+                <div className='d-flex flex-column h-100' id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}>
                     <div className={'offcanvas-header'}>
                         <h5 className='offcanvas-title font-size-20-black fw-500' id={'offcanvasBasketLabel'}>Ваша корзина</h5>
                         <ButtonClose onClick={closeDrawer} />
                     </div>
-                    <div className="offcanvas-body">
+                    <div className="offcanvas-body flex-grow-1">
                         {
 
                             basketListCount && basketList
