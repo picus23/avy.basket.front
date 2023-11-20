@@ -13,12 +13,12 @@ const BasketDrawer: FC<BasketDrawerProps> = () => {
     const { basketList, basketListCount, isOpenDrawer, closeDrawer } = useContext(BasketContext);
 
     return <Drawer placement="right" width={512} open={isOpenDrawer} closable={false} onClose={closeDrawer}>
-        <div className='d-flex flex-column h-100' id={'offcanvasBasket'} aria-labelledby={'offcanvasBasketLabel'}>
-            <div className={'offcanvas-header'}>
-                <h5 className='offcanvas-title font-size-20-black fw-500' id={'offcanvasBasketLabel'}>Ваша корзина</h5>
-                <Button onClick={closeDrawer} icon={<MdClose size={20} fill={'gray'} />}>Закрыть</Button>
+        <div className='flex flex-col gap-3 h-full '>
+            <div className='flex justify-between items-center'>
+                <h5 className='text-xl m-0' id={'offcanvasBasketLabel'}>Ваша корзина</h5>
+                <Button className="flex items-center gap-2" onClick={closeDrawer} icon={<MdClose size={20} fill={'gray'} />}>Закрыть</Button>
             </div>
-            <div className="offcanvas-body flex-grow-1">
+            <div className="flex-grow">
                 {
 
                     basketListCount && basketList
@@ -31,9 +31,7 @@ const BasketDrawer: FC<BasketDrawerProps> = () => {
 
                 }
             </div>
-            <div className={'offcanvas-footer'}>
-                <FooterContent basketUrl="/basket" />
-            </div>
+            <FooterContent basketUrl="/basket" />
         </div>
     </Drawer>
 

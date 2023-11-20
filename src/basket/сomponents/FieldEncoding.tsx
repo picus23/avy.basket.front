@@ -24,18 +24,18 @@ const FieldEncoding: FC<FieldEncodingProps> = ({ imgUrl, pagetitle, price, amoun
             // isDelete && <MainBasketEraceTimer textSize='14px' onClick={onCancelErace} timerWidth={isDelete} />
         }
 
-        <div className='d-flex justify-content-between align-items-center w-100 gap-2'>
-            <div className='d-flex gap-2'>
-                <Image width={64} height={64} style={{ aspectRatio: '1/1', width: '64px', height: '64px' }} src={imgUrl} alt="logo" />
-                <div className="d-flex flex-column justify-content-center">
-                    <span className="font-size-20 fw-500">{pagetitle}</span>
-                    <div className='d-flex gap-2'>
-                        {price ? <span className="font-size-16-gray fw-500">{price}$ за шт.</span> : false}
-                        {amount ? <span className="font-size-16-gray fw-500">Осталось {amount} шт.</span> : false}
+        <div className='flex justify-between items-center w-100 gap-2'>
+            <div className='flex gap-2'>
+                <Image width={64} height={64} className='aspect-square' src={imgUrl} alt="logo" />
+                <div className="flex flex-col justify-center">
+                    <span className="text-[20px] fw-500">{pagetitle}</span>
+                    <div className='d-flex gap-2 text-[16px] text-gray-500'>
+                        {price ? <span >{price}$ за шт.</span> : false}
+                        {amount ? <span>Осталось {amount} шт.</span> : false}
                     </div>
                 </div>
             </div>
-            <div className='d-flex gap-2'>
+            <div className='flex gap-2'>
                 {basketButtons ?? false}
             </div>
         </div>

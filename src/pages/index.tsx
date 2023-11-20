@@ -44,14 +44,6 @@ export default function Home() {
                         }
 
                     </div>
-
-
-
-
-
-
-
-
                 </Basket>
             </ConfigProvider>
         </>

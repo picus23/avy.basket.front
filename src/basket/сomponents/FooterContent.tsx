@@ -1,6 +1,5 @@
 import { FC, useContext } from 'react';
 import { BasketContext } from "../../Basket";
-import ButtonCheckout from '../ButtonCheckout';
 import { Button } from 'antd';
 
 interface iFooter {
@@ -10,29 +9,22 @@ interface iFooter {
 const FooterContent: FC<iFooter> = ({ basketUrl }) => {
     const { basketListCount, getProductsPrice } = useContext(BasketContext);
 
-    return (
-
-        <div className={'_b66b70396c42fad9c205e5cf369f8a1e'}>
-            <div className="d-flex flex-column gap-1 mx-3">
-                <hr className='' />
-                <div className="d-flex justify-content-between">
-                    <span className="font-size-16-black">Товаров</span>
-                    <span className="font-size-16-black">{basketListCount} шт.</span>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <span className="font-size-16-black">Итого</span>
-                    <span className="font-size-16-black">{getProductsPrice && (getProductsPrice() ?? '$$$$')} $</span>
-                </div>
-                <a className='text-decoration-none' href='#ОформитьЗаказ'>
-                    <Button>Оформить заказ</Button>
-                </a>
-                <a className='text-decoration-none' href={basketUrl}>
-                    <Button>Перейти в корзину</Button>
-                </a>
-            </div>
+    return <div className="flex flex-col gap-3   border-0 border-t-[1px] border-solid border-gray-200 pt-3">
+        <div className="flex justify-between text-[16px]">
+            <span>Товаров</span>
+            <span>{basketListCount} шт.</span>
         </div>
-
-    )
+        <div className="flex justify-between text-[16px]">
+            <span>Итого</span>
+            <span>{getProductsPrice && (getProductsPrice() ?? '$$$$')} $</span>
+        </div>
+        <a className='text-decoration-none' href='#ОформитьЗаказ'>
+            <Button type='primary' className='w-full'>Оформить заказ</Button>
+        </a>
+        <a className='text-decoration-none' href={basketUrl}>
+            <Button type='link' className='w-full'>Перейти в корзину</Button>
+        </a>
+    </div>
 }
 
 export default FooterContent;
