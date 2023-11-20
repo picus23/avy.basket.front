@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { BasketContext } from "./BasketContext";
+import { BasketContext } from "../Basket";
 import Button from "kit/components/buttons/Button";
 import CartItem from "kit/components/cartItem/CartItem";
 import EncodingWrapper from "kit/components/encoding/EncodingWrapper";

@@ -1,5 +1,5 @@
 import { message } from "antd"
-import { BasketItem, DetailBaketItems } from "./BasketContext"
+import { BasketItem, DetailBaketItems } from "../Basket"
 import { EnvStorage } from "./environment/Interfaces"
 
 

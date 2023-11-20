@@ -1,10 +1,9 @@
 import { FC, useContext } from "react";
-import Loader from 'kit/components/Loader/Loader';
-import FieldEncoding from 'kit/components/searchElement/fields/FieldEncoding'
 
-import { BasketContext, BasketItem } from "../../BasketContext";
-import BasketRemoveButton from "../../BasketRemoveButton";
-import { WarningInContext } from "../../Api";
+import { BasketContext, BasketItem } from "../../Basket";
+import BasketRemoveButton from "../BasketRemoveButton";
+import { WarningInContext } from "../Api";
+import Loader from "./Loader";
 
 interface iProductItem {
     basketItem: BasketItem,

@@ -1,38 +1,24 @@
-import React from 'react';
-import 'kit/styles/style.css';
-import { Basket } from "../Basket/BasketContext";
-import BasketAddButton from "../Basket/BasketAddButton";
-import BasketOpen from "../Basket/BasketOpen";
-import BasketRemoveButton from "../Basket/BasketRemoveButton";
+import BasketAddButton from "../basket/BasketAddButton";
+import BasketOpen from "../basket/BasketOpen";
+import BasketRemoveButton from "../basket/BasketRemoveButton";
 
-import { getDetailBasket, getEnvironment } from '../Basket/Api';
-import MainBasket from '../Basket/MainBasket';
-import BasketForm from 'kit/components/basket/BasketForm';
+import { getDetailBasket, getEnvironment } from '../basket/Api';
+import Basket from '@/Basket';
 
 export default function Home() {
   return (
     <>
 
-            <Basket getEnvironment={getEnvironment} getDetailBasket={getDetailBasket}>
-                <div>
-                    {/* Кнопки в таблице */}
+            <Basket getDetailBasket={getDetailBasket}>
+                test
+                {/* <div>
                     <div className={'d-flex'}>
-                        {/* Кнопка добавления */}
                         <BasketAddButton pagetitle={'11111111'} />
-                        {/* Кнопка добавления */}
-
-                        {/* Кнопка удаления */}
                         <BasketRemoveButton pagetitle={'11111111'} />
-                        {/* Кнопка удаления */}
                     </div>
                     <div className={'d-flex'}>
-                        {/*    /!* Кнопка добавления *!/*/}
                         <BasketAddButton pagetitle={'22222222'} />
-                        {/*    /!* Кнопка добавления *!/*/}
-
-                        {/*    /!* Кнопка удаления *!/*/}
                         <BasketRemoveButton pagetitle={'22222222'} />
-                        {/*    /!* Кнопка удаления *!/*/}
                     </div>
                     <div className='mb-4' style={{ width: '147px' }}>
                         <BasketAddButton pagetitle={'33333333'} />
@@ -44,14 +30,12 @@ export default function Home() {
                         <BasketAddButton pagetitle={'99999999'} />
                         <BasketAddButton pagetitle={'10000000'} />
                     </div>
-
                 </div>
-
 
 
                 <div className='mb-4' style={{ width: '147px' }}>
                     <BasketOpen />
-                </div>
+                </div> */}
 
 
             </Basket>

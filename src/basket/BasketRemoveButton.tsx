@@ -1,5 +1,5 @@
 import React, { FC, useContext } from "react";
-import { BasketContext, iBasketContext } from "./BasketContext";
+import { BasketContext, iBasketContext } from "../Basket";
 
 import ButtonGrayAddRemove from "./ButtonGrayAddRemove";
 import Button from "./Button";

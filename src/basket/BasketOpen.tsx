@@ -1,4 +1,4 @@
-import { BasketContext } from "./BasketContext";
+import { BasketContext } from "../Basket";
 import { useContext } from "react";
 import { MdShoppingCart } from "react-icons/md";
 import Button from "./Button";

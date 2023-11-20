@@ -1,7 +1,8 @@
-import { createContext, FC, ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import BasketCanvas from "./BasketCanvas"
-import { EnvStorage } from "./environment/Interfaces";
-import { IBreadСrumbs } from 'kit/components/breadСrumbs/interface'
+import { createContext, FC, ReactNode, useCallback, useEffect, useState } from "react"
+import BasketCanvas from "./basket/BasketDrawer"
+import { EnvStorage } from "./basket/environment/Interfaces";
+import { defaultData } from "./basket/config/config";
+import { ConfigProvider } from "antd";
 
 
 export interface BasketItemProps {
@@ -26,7 +27,7 @@ interface DetailBaketItem {
     compatibilityStatus: number,
     img: string,
 
-    breadСrumbs: IBreadСrumbs[],
+    breadСrumbs: string[],
     documents: [],
 }
 
@@ -39,12 +40,11 @@ export interface DetailBaketItems {
 }
 
 
-export interface iBasketContext {
+export interface BasketContextProps {
     basketList?: BasketItem[],
     basketListCount?: number,
 
     isOpenDrawer?: boolean,
-
 
 
     getDetails?: (pagetitle: string) => DetailBaketItem | false,
@@ -61,17 +61,18 @@ export interface iBasketContext {
     eraseAll?: () => void,
 }
 
-export const BasketContext = createContext<iBasketContext>({});
+
+export const BasketContext = createContext<BasketContextProps>({});
 
 
-interface iBasket {
+interface BasketProps {
     children: ReactNode,
-    getProps: () => BasketItemProps,
+    // getProps: () => BasketItemProps,
     getDetailBasket: (basketList: BasketItem[]) => Promise<DetailBaketItems>
 }
 
 
-export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => {
+const Basket: FC<BasketProps> = ({ children, getDetailBasket }) => {
     const [isInit, setIsInit] = useState(false);
 
     const [basketList, setBasketList] = useState<BasketItem[]>([]);
@@ -122,8 +123,6 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
             setBasketListCount(basketList.reduce((a, basketItem) => a + basketItem.count, 0))
 
 
-
-
             const interval = setInterval(
                 () => {
 
@@ -147,7 +146,7 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
                 }, 200)
             return () => clearInterval(interval)
         }
-    }, [basketList, isInit]);
+    }, [basketList, isInit])
 
 
     useEffect(() => {
@@ -183,12 +182,6 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
         if (openDrawer)
             setIsOpenDrawer(true)
     }
-
-
-
-
-
-
 
 
     const setCount = (pagetitle: string, count: number) => {
@@ -232,7 +225,6 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
     }
 
 
-
     const getProductsPrice = (): number | false => {
         let price = 0
 
@@ -255,7 +247,7 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
 
     const getDetails = (pagetitle: string): DetailBaketItem | false => {
         if (!pagetitle)
-            console.info({pagetitle})
+            console.info({ pagetitle })
 
         if (pagetitle && pagetitle in detailBasketList)
             return detailBasketList[pagetitle];
@@ -264,27 +256,32 @@ export const Basket: FC<iBasket> = ({ children, getProps, getDetailBasket }) => 
     }
 
 
-    return <BasketContext.Provider value={
-        {
-            basketList,
-            getDetails,
-            basketListCount,
+    return <ConfigProvider theme={defaultData}>
+        <BasketContext.Provider value={
+            {
+                basketList,
+                getDetails,
+                basketListCount,
 
-            isOpenDrawer,
-            closeDrawer,
-            openDrawer,
-            toggleAdd,
+                isOpenDrawer,
+                closeDrawer,
+                openDrawer,
+                toggleAdd,
 
-            getBasketItem,
-            setCount,
+                getBasketItem,
+                setCount,
 
-            productErase,
-            productPrice,
-            getProductsPrice,
-            eraseAll
-        }
-    }>
-        <BasketCanvas />
-        {children}
-    </BasketContext.Provider>
+                productErase,
+                productPrice,
+                getProductsPrice,
+                eraseAll
+            }
+        }>
+            <BasketCanvas />
+            {children}
+        </BasketContext.Provider>
+    </ConfigProvider>
 }
+
+
+export default Basket

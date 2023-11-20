@@ -1,10 +1,10 @@
 
 import 'kit/styles/style.css';
 import { FC } from "react";
-import MainBasket from '../Basket/MainBasket';
-import { Basket } from "../Basket/BasketContext";
+import MainBasket from '../basket/MainBasket';
+import { Basket } from "../Basket";
 import BasketForm from 'kit/components/basket/BasketForm';
-import { getDetailBasket, getEnvironment } from '../Basket/Api';
+import { getDetailBasket, getEnvironment } from '../basket/Api';
 
 
 

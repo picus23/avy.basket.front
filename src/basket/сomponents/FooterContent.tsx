@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
-import { BasketContext } from "../../BasketContext";
+import { BasketContext } from "../../Basket";
 import ButtonCheckout from '../ButtonCheckout';
+import { Button } from 'antd';
 
 interface iFooter {
     basketUrl: string
@@ -22,8 +23,12 @@ const FooterContent: FC<iFooter> = ({ basketUrl }) => {
                     <span className="font-size-16-black">Итого</span>
                     <span className="font-size-16-black">{getProductsPrice && (getProductsPrice() ?? '$$$$')} $</span>
                 </div>
-                <a className='text-decoration-none' href='#ОформитьЗаказ'><ButtonCheckout btn_style="my-btn-checkout w-100">Оформить заказ</ButtonCheckout></a>
-                <a className='text-decoration-none' href={basketUrl}><ButtonCheckout btn_style="my-btn-go-to w-100">Перейти в корзину</ButtonCheckout></a>
+                <a className='text-decoration-none' href='#ОформитьЗаказ'>
+                    <Button>Оформить заказ</Button>
+                </a>
+                <a className='text-decoration-none' href={basketUrl}>
+                    <Button>Перейти в корзину</Button>
+                </a>
             </div>
         </div>
 
