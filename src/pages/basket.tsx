@@ -3,6 +3,7 @@ import { FC } from "react";
 import MainBasket from '../basket/MainBasket';
 import { getDetailBasket } from '../basket/Api';
 import Basket from '@/Basket';
+import BasketForm from "@/basket/сomponents/main/BasketForm";
 
 
 
@@ -14,10 +15,11 @@ interface BasketProps {
 
 const BasketIndex: FC<BasketProps> = (props) => {
     return <Basket getDetailBasket={getDetailBasket}>
-        <div className="d-flex">
-
+        <div className="flex">
+            <div className="flex-grow">
             <MainBasket />
-            {/* <BasketForm /> */}
+            </div>
+            <BasketForm />
         </div>
     </Basket>
 }
