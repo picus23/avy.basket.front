@@ -1,5 +1,4 @@
 import { useContext, FC } from "react";
-import ButtonClose from "./сomponents/Canvas/ButtonClose";
 import ProductItem from "./сomponents/ProductItem";
 import FooterContent from "./сomponents/FooterContent";
 import { BasketContext } from "../Basket";

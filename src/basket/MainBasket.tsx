@@ -1,18 +1,15 @@
 import { FC, useContext } from "react";
 import { BasketContext } from "../Basket";
-import Button from "kit/components/buttons/Button";
-import CartItem from "kit/components/cartItem/CartItem";
-import EncodingWrapper from "kit/components/encoding/EncodingWrapper";
+
 import { MdDelete } from "react-icons/md";
-import BasketRemoveButton from "./BasketRemoveButton";
+import BasketRemoveButton from "./сomponents/BasketRemoveButton";
 
 
-import {NextUrl} from 'kit/components/breadСrumbs/interface'
 
 
 
 interface MainBasketProps {
-    route?: (url: string) => NextUrl
+    route?: (url: string) => string
 }
 
 const MainBasket: FC<MainBasketProps> = ({ route }) => {

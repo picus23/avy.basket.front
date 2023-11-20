@@ -1,9 +1,10 @@
 import { FC, useContext } from "react";
 
 import { BasketContext, BasketItem } from "../../Basket";
-import BasketRemoveButton from "../BasketRemoveButton";
+import BasketRemoveButton from "./BasketRemoveButton";
 import { WarningInContext } from "../Api";
 import Loader from "./Loader";
+import FieldEncoding from "./FieldEncoding";
 
 interface iProductItem {
     basketItem: BasketItem,
@@ -22,15 +23,15 @@ const ProductItem: FC<iProductItem> = ({ basketItem }) => {
 
 
     return <FieldEncoding
-            imgUrl={details.img}
-            pagetitle={details.pagetitle}
-            price={details.price}
-            basketButtons={
-                <BasketRemoveButton pagetitle={basketItem.pagetitle} />
-            }
-            isDelete={basketItem.isDelete}
-            onCancelErace={() => setCount(basketItem.pagetitle, 1)}
-        />
+        imgUrl={details.img}
+        pagetitle={details.pagetitle}
+        price={details.price}
+        basketButtons={
+            <BasketRemoveButton pagetitle={basketItem.pagetitle} />
+        }
+        isDelete={basketItem.isDelete}
+        onCancelErace={() => setCount(basketItem.pagetitle, 1)}
+    />
 
 }
 

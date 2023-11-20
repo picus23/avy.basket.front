@@ -1,8 +1,6 @@
 import { createContext, FC, ReactNode, useCallback, useEffect, useState } from "react"
-import BasketCanvas from "./basket/BasketDrawer"
+import BasketDrawer from "./basket/BasketDrawer";
 import { EnvStorage } from "./basket/environment/Interfaces";
-import { defaultData } from "./basket/config/config";
-import { ConfigProvider } from "antd";
 
 
 export interface BasketItemProps {
@@ -163,7 +161,7 @@ const Basket: FC<BasketProps> = ({ children, getDetailBasket }) => {
 
 
     const toggleAdd = (pagetitle: string, count: number, openDrawer = true) => {
-        const props = getProps()
+        const props = {} //getProps()
 
         setBasketList(prev => {
             const nextBasketList = [...prev]
@@ -256,31 +254,29 @@ const Basket: FC<BasketProps> = ({ children, getDetailBasket }) => {
     }
 
 
-    return <ConfigProvider theme={defaultData}>
-        <BasketContext.Provider value={
-            {
-                basketList,
-                getDetails,
-                basketListCount,
+    return <BasketContext.Provider value={
+        {
+            basketList,
+            getDetails,
+            basketListCount,
 
-                isOpenDrawer,
-                closeDrawer,
-                openDrawer,
-                toggleAdd,
+            isOpenDrawer,
+            closeDrawer,
+            openDrawer,
+            toggleAdd,
 
-                getBasketItem,
-                setCount,
+            getBasketItem,
+            setCount,
 
-                productErase,
-                productPrice,
-                getProductsPrice,
-                eraseAll
-            }
-        }>
-            <BasketCanvas />
-            {children}
-        </BasketContext.Provider>
-    </ConfigProvider>
+            productErase,
+            productPrice,
+            getProductsPrice,
+            eraseAll
+        }
+    }>
+        <BasketDrawer />
+        {children}
+    </BasketContext.Provider>
 }
 
 
