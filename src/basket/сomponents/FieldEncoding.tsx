@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react'
 import Image from 'next/image'
 import { Button } from 'antd';
+import MainBasketEraceTimer from './old/MainBasketEraceTimer';
 
 
 interface FieldEncodingProps {
@@ -20,7 +21,7 @@ const FieldEncoding: FC<FieldEncodingProps> = ({ imgUrl, pagetitle, price, amoun
 
     return <div className="my-2 position-relative">
         {
-            // isDelete && <MainBasketEraceTimer textSize='14px' onClick={onCancelErace} timerWidth={isDelete} />
+            <MainBasketEraceTimer onClick={onCancelErace} timerWidth={isDelete} />
             // isDelete && <MainBasketEraceTimer textSize='14px' onClick={onCancelErace} timerWidth={isDelete} />
         }
 
